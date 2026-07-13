@@ -166,32 +166,49 @@ public class ServicoCurso : ServicoBase<Curso>
      .ToList();
     }
 
-    public List<ListarCursosDto> PesquisarPorCategoria(Guid categoriaId)
+    public List<ListarCursosDto> Pesquisar(
+     string? nome,
+     Guid? categoriaId,
+     Guid? nivelDeDificuldadeId)
     {
-        return repositorioCurso
-            .Filtrar(c => c.Categoria.Id == categoriaId)
-             .Select(c => new ListarCursosDto(
-         c.Id,
-         c.Nome,
-         c.CargaHoraria,
-         c.Categoria.Nome,
-         c.NivelDeDificuldade.Nome
-     ))
-     .ToList();
-    }
+        List<Curso> cursos = repositorioCurso.SelecionarTodos();
 
-    public List<ListarCursosDto> PesquisarPorNivelDeDificuldade(Guid nivelId)
-    {
-        return repositorioCurso
-            .Filtrar(c => c.NivelDeDificuldade.Id == nivelId)
-           .Select(c => new ListarCursosDto(
-         c.Id,
-         c.Nome,
-         c.CargaHoraria,
-         c.Categoria.Nome,
-         c.NivelDeDificuldade.Nome
-     ))
-     .ToList();
+
+        if (!string.IsNullOrWhiteSpace(nome))
+        {
+            string nomeNormalizado = nome.Trim().ToLower();
+
+            cursos = cursos
+                .Where(c => c.Nome.ToLower().Contains(nomeNormalizado))
+                .ToList();
+        }
+
+
+        if (categoriaId.HasValue)
+        {
+            cursos = cursos
+                .Where(c => c.Categoria.Id == categoriaId.Value)
+                .ToList();
+        }
+
+
+        if (nivelDeDificuldadeId.HasValue)
+        {
+            cursos = cursos
+                .Where(c => c.NivelDeDificuldade.Id == nivelDeDificuldadeId.Value)
+                .ToList();
+        }
+
+
+        return cursos
+            .Select(c => new ListarCursosDto(
+                c.Id,
+                c.Nome,
+                c.CargaHoraria,
+                c.Categoria.Nome,
+                c.NivelDeDificuldade.Nome
+            ))
+            .ToList();
     }
 
     private bool ExisteCursoComMesmoNome(string nome, Guid? idIgnorado = null)

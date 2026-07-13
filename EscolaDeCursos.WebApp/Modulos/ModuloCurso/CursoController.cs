@@ -15,21 +15,33 @@ public class CursoController(
     IMapper mapeador) : Controller
 {
     [HttpGet]
-    public ActionResult Listar(string pesquisa)
+    public ActionResult Listar(
+      string pesquisa,
+      Guid? categoriaId,
+      Guid? nivelDeDificuldadeId)
     {
-        List<ListarCursosDto> dtos;
+        List<ListarCursosDto> dtos =
+            servicoCurso.Pesquisar(
+                pesquisa,
+                categoriaId,
+                nivelDeDificuldadeId
+            );
 
-        if (string.IsNullOrWhiteSpace(pesquisa))
-            dtos = servicoCurso.SelecionarTodos();
-        else
-            dtos = servicoCurso.PesquisarPorNome(pesquisa);
 
-        List<ListarCursosViewModel> listarVms =
+        List<ListarCursosViewModel> vms =
             mapeador.Map<List<ListarCursosViewModel>>(dtos);
 
-        ViewBag.Pesquisa = pesquisa;
 
-        return View(listarVms);
+        ViewBag.Pesquisa = pesquisa;
+        ViewBag.CategoriaId = categoriaId;
+        ViewBag.NivelDeDificuldadeId = nivelDeDificuldadeId;
+
+
+        ViewBag.Categorias = CarregarCategorias();
+        ViewBag.NiveisDeDificuldade = CarregarNiveisDeDificuldade();
+
+
+        return View(vms);
     }
 
     [HttpGet]
