@@ -1,8 +1,10 @@
 using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
+using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using EscolaDeCursos.Dominio.Modulos.ModuloNivelDeDificuldade;
 using EscolaDeCursos.Infra.Comartilhado.Logging;
 using EscolaDeCursos.Infra.Compartilhado.Orm;
 using EscolaDeCursos.Infra.Modulos.ModuloCategoria;
+using EscolaDeCursos.Infra.Modulos.ModuloCurso;
 using EscolaDeCursos.Infra.Modulos.ModuloNivelDeDificuldade;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,5 +49,6 @@ public static class InjecaoDependencia
 
         services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmOrm>();
         services.AddScoped<IRepositorioNivelDeDificuldade, RepositorioNivelDeDificuldadeEmOrm>();
+        services.AddScoped<IRepositorioCurso, RepositorioCursoEmOrm>();
     }
 }

@@ -119,17 +119,15 @@ public class ServicoCurso : ServicoBase<Curso>
     public List<ListarCursosDto> SelecionarTodos()
     {
         return repositorioCurso
-            .SelecionarTodos()
-            .Select(c => new ListarCursosDto(
-                c.Id,
-                c.Nome,
-                c.CargaHoraria,
-                c.Categoria.Id,
-                c.Categoria.Nome,
-                c.NivelDeDificuldade.Id,
-                c.NivelDeDificuldade.Nome
-            ))
-            .ToList();
+     .SelecionarTodos()
+     .Select(c => new ListarCursosDto(
+         c.Id,
+         c.Nome,
+         c.CargaHoraria,
+         c.Categoria.Nome,
+         c.NivelDeDificuldade.Nome
+     ))
+     .ToList();
     }
 
     public Result<DetalhesCursoDto> SelecionarPorId(Guid id)
@@ -158,48 +156,42 @@ public class ServicoCurso : ServicoBase<Curso>
 
         return repositorioCurso
             .Filtrar(c => c.Nome.ToLower().Contains(nomeNormalizado))
-            .Select(c => new ListarCursosDto(
-                c.Id,
-                c.Nome,
-                c.CargaHoraria,
-                c.Categoria.Id,
-                c.Categoria.Nome,
-                c.NivelDeDificuldade.Id,
-                c.NivelDeDificuldade.Nome
-            ))
-            .ToList();
+             .Select(c => new ListarCursosDto(
+         c.Id,
+         c.Nome,
+         c.CargaHoraria,
+         c.Categoria.Nome,
+         c.NivelDeDificuldade.Nome
+     ))
+     .ToList();
     }
 
     public List<ListarCursosDto> PesquisarPorCategoria(Guid categoriaId)
     {
         return repositorioCurso
             .Filtrar(c => c.Categoria.Id == categoriaId)
-            .Select(c => new ListarCursosDto(
-                c.Id,
-                c.Nome,
-                c.CargaHoraria,
-                c.Categoria.Id,
-                c.Categoria.Nome,
-                c.NivelDeDificuldade.Id,
-                c.NivelDeDificuldade.Nome
-            ))
-            .ToList();
+             .Select(c => new ListarCursosDto(
+         c.Id,
+         c.Nome,
+         c.CargaHoraria,
+         c.Categoria.Nome,
+         c.NivelDeDificuldade.Nome
+     ))
+     .ToList();
     }
 
     public List<ListarCursosDto> PesquisarPorNivelDeDificuldade(Guid nivelId)
     {
         return repositorioCurso
             .Filtrar(c => c.NivelDeDificuldade.Id == nivelId)
-            .Select(c => new ListarCursosDto(
-                c.Id,
-                c.Nome,
-                c.CargaHoraria,
-                c.Categoria.Id,
-                c.Categoria.Nome,
-                c.NivelDeDificuldade.Id,
-                c.NivelDeDificuldade.Nome
-            ))
-            .ToList();
+           .Select(c => new ListarCursosDto(
+         c.Id,
+         c.Nome,
+         c.CargaHoraria,
+         c.Categoria.Nome,
+         c.NivelDeDificuldade.Nome
+     ))
+     .ToList();
     }
 
     private bool ExisteCursoComMesmoNome(string nome, Guid? idIgnorado = null)

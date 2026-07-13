@@ -1,0 +1,141 @@
+﻿@using EscolaDeCursos.WebApp.Modulos.ModuloCurso
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Cadastrar Curso";
+}
+
+@model CadastrarCursoViewModel
+
+
+<div class="card shadow-sm">
+
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Cadastrar Novo Curso</h5>
+    </div>
+
+
+    <div class="card-body">
+
+        <form asp-action="Cadastrar" method="post">
+
+
+            <div class="mb-3">
+
+                <label asp-for="Nome" class="form-label">
+                    Nome
+                </label>
+
+                <input asp-for="Nome" class="form-control" placeholder="Digite o nome do curso" />
+
+                <span asp-validation-for="Nome" class="text-danger">
+                </span>
+
+            </div>
+
+
+
+            <div class="mb-3">
+
+                <label asp-for="CargaHoraria" class="form-label">
+                    Carga Horária
+                </label>
+
+                <input asp-for="CargaHoraria" class="form-control" placeholder="Digite a carga horária" />
+
+                <span asp-validation-for="CargaHoraria" class="text-danger">
+                </span>
+
+            </div>
+
+
+
+            <div class="mb-3">
+
+                <label asp-for="CategoriaId" class="form-label">
+                    Categoria
+                </label>
+
+
+                <select asp-for="CategoriaId" class="form-select">
+
+                    <option value="">
+                        Selecione uma categoria
+                    </option>
+
+
+                    @foreach (var categoria in Model.Categorias)
+                    {
+                        <option value="@categoria.Id">
+                            @categoria.Nome
+                        </option>
+                    }
+
+                </select>
+
+
+                <span asp-validation-for="CategoriaId" class="text-danger">
+                </span>
+
+            </div>
+
+
+
+
+            <div class="mb-3">
+
+                <label asp-for="NivelDeDificuldadeId" class="form-label">
+                    Nível de dificuldade
+                </label>
+
+
+                <select asp-for="NivelDeDificuldadeId" class="form-select">
+
+                    <option value="">
+                        Selecione um nível
+                    </option>
+
+
+                    @foreach (var nivel in Model.NiveisDeDificuldade)
+                    {
+                        <option value="@nivel.Id">
+                            @nivel.Nome
+                        </option>
+                    }
+
+                </select>
+
+
+                <span asp-validation-for="NivelDeDificuldadeId" class="text-danger">
+                </span>
+
+            </div>
+
+
+
+
+            <div class="d-flex justify-content-between">
+
+                <a asp-action="Listar" class="btn btn-outline-secondary">
+
+                    Voltar
+
+                </a>
+
+
+                <button type="submit" class="btn btn-primary">
+
+                    Cadastrar
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+

@@ -2,14 +2,22 @@ using System;
 
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloCurso;
 
+public record OpcaoCategoriaDto(
+    Guid Id,
+    string Nome
+);
+
+public record OpcaoNivelDeDificuldadeDto(
+    Guid Id,
+    string Nome
+);
+
 public record ListarCursosDto(
     Guid Id,
     string Nome,
     int CargaHoraria,
-    Guid CategoriaId,
-    string CategoriaNome,
-    Guid NivelDeDificuldadeId,
-    string NivelDeDificuldadeNome
+    string Categoria,
+    string NivelDeDificuldade
 );
 
 public record CadastrarCursoDto(

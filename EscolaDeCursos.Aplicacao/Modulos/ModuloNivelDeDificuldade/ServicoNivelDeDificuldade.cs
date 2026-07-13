@@ -3,21 +3,23 @@ using System;
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloNivelDeDificuldade;
 
 using EscolaDeCursos.Aplicacao.Compartilhado;
+using EscolaDeCursos.Aplicacao.Modulos.ModuloCurso;
+using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using EscolaDeCursos.Dominio.Modulos.ModuloNivelDeDificuldade;
 using FluentResults;
 
 public class ServicoNivelDeDificuldade : ServicoBase<NivelDeDificuldade>
 {
     private readonly IRepositorioNivelDeDificuldade repositorioNivelDeDificuldade;
-    //private readonly IRepositorioCurso repositorioCurso;
+    private readonly IRepositorioCurso repositorioCurso;
 
 
     public ServicoNivelDeDificuldade(
-        IRepositorioNivelDeDificuldade repositorioNivelDeDificuldade)
-    //  IRepositorioCurso repositorioCurso)
+        IRepositorioNivelDeDificuldade repositorioNivelDeDificuldade,
+      IRepositorioCurso repositorioCurso)
     {
         this.repositorioNivelDeDificuldade = repositorioNivelDeDificuldade;
-        //this.repositorioCurso = repositorioCurso;
+        this.repositorioCurso = repositorioCurso;
     }
 
 
@@ -99,7 +101,7 @@ public class ServicoNivelDeDificuldade : ServicoBase<NivelDeDificuldade>
             return Falha(string.Empty, "Nível de dificuldade não encontrado.");
 
 
-        /*
+
         if (PossuiCursosVinculados(id))
         {
             return Falha(
@@ -107,7 +109,7 @@ public class ServicoNivelDeDificuldade : ServicoBase<NivelDeDificuldade>
                 "Não é possível excluir este nível de dificuldade, pois existem cursos vinculados."
             );
         }
-        */
+
 
 
 
@@ -238,12 +240,23 @@ public class ServicoNivelDeDificuldade : ServicoBase<NivelDeDificuldade>
             );
     }
 
-    /*
+
     private bool PossuiCursosVinculados(Guid nivelId)
     {
         return repositorioCurso
             .SelecionarTodos()
             .Any(c => c.NivelDeDificuldade.Id == nivelId);
     }
-    */
+
+    public List<OpcaoNivelDeDificuldadeDto> SelecionarOpcoes()
+    {
+        return repositorioNivelDeDificuldade
+            .SelecionarTodos()
+            .Select(n => new OpcaoNivelDeDificuldadeDto(
+                n.Id,
+                n.Nome
+            ))
+            .ToList();
+    }
+
 }

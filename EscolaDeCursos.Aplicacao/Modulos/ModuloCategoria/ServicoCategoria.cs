@@ -1,6 +1,8 @@
 using System;
 using EscolaDeCursos.Aplicacao.Compartilhado;
+using EscolaDeCursos.Aplicacao.Modulos.ModuloCurso;
 using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
+using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using FluentResults;
 
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloCategoria;
@@ -8,14 +10,14 @@ namespace EscolaDeCursos.Aplicacao.Modulos.ModuloCategoria;
 public class ServicoCategoria : ServicoBase<Categoria>
 {
     private readonly IRepositorioCategoria repositorioCategoria;
-    //private readonly IRepositorioCurso repositorioCurso;
+    private readonly IRepositorioCurso repositorioCurso;
 
     public ServicoCategoria(
-        IRepositorioCategoria repositorioCategoria)
-    // IRepositorioCurso repositorioCurso)
+        IRepositorioCategoria repositorioCategoria,
+     IRepositorioCurso repositorioCurso)
     {
         this.repositorioCategoria = repositorioCategoria;
-        //this.repositorioCurso = repositorioCurso;
+        this.repositorioCurso = repositorioCurso;
     }
 
     public Result Cadastrar(CadastrarCategoriaDto dto)
@@ -63,13 +65,13 @@ public class ServicoCategoria : ServicoBase<Categoria>
 
         if (categoria == null)
             return Falha(string.Empty, "Categoria não encontrada.");
-        /*
+
         if (PossuiCursosVinculados(id))
             return Falha(
                 string.Empty,
                 "Não é possível excluir esta categoria, pois existem cursos vinculados."
             );
-        */
+
         repositorioCategoria.Excluir(id);
 
         return Result.Ok();
@@ -116,14 +118,14 @@ public class ServicoCategoria : ServicoBase<Categoria>
             );
     }
 
-    /*
+
     private bool PossuiCursosVinculados(Guid categoriaId)
     {
         return repositorioCurso
             .SelecionarTodos()
             .Any(c => c.Categoria.Id == categoriaId);
     }
-    */
+
 
 
     private static string NormalizarNome(string nome)
@@ -138,6 +140,17 @@ public class ServicoCategoria : ServicoBase<Categoria>
         return repositorioCategoria
             .Filtrar(c => c.Nome.ToLower().Contains(nomeNormalizado))
             .Select(c => new ListarCategoriasDto(
+                c.Id,
+                c.Nome
+            ))
+            .ToList();
+    }
+
+    public List<OpcaoCategoriaDto> SelecionarOpcoes()
+    {
+        return repositorioCategoria
+            .SelecionarTodos()
+            .Select(c => new OpcaoCategoriaDto(
                 c.Id,
                 c.Nome
             ))
