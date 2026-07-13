@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="Modulos\" />
     <Folder Include="Modulos\ModuloCategoria\" />
+    <Folder Include="Modulos\ModuloNivelDeDificuldade\" />
   </ItemGroup>
 
 </Project>
