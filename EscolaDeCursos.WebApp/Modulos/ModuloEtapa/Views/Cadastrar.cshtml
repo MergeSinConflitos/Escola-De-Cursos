@@ -1,0 +1,140 @@
+﻿@using EscolaDeCursos.WebApp.Modulos.ModuloEtapa
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Cadastrar Etapa";
+}
+
+@model CadastrarEtapaViewModel
+
+
+<div class="card shadow-sm">
+
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">
+            Cadastrar Nova Etapa
+        </h5>
+    </div>
+
+
+    <div class="card-body">
+
+
+        <form asp-action="Cadastrar" method="post">
+
+
+            <div class="mb-3">
+
+                <label asp-for="Nome" class="form-label">
+                    Nome
+                </label>
+
+
+                <input asp-for="Nome" class="form-control" placeholder="Digite o nome da etapa..." />
+
+
+                <span asp-validation-for="Nome" class="text-danger">
+                </span>
+
+            </div>
+
+
+
+            <div class="mb-3">
+
+                <label asp-for="Duracao" class="form-label">
+                    Duração (horas)
+                </label>
+
+
+                <input asp-for="Duracao" class="form-control" type="number" min="1" />
+
+
+                <span asp-validation-for="Duracao" class="text-danger">
+                </span>
+
+            </div>
+
+
+
+
+            <div class="mb-3">
+
+                <label asp-for="Ordem" class="form-label">
+                    Ordem
+                </label>
+
+
+                <input asp-for="Ordem" class="form-control" type="number" min="1" />
+
+
+                <span asp-validation-for="Ordem" class="text-danger">
+                </span>
+
+            </div>
+
+
+
+
+            <div class="mb-3">
+
+                <label asp-for="CursoId" class="form-label">
+                    Curso
+                </label>
+
+
+                <select asp-for="CursoId" class="form-select">
+
+
+                    <option value="">
+                        Selecione um curso
+                    </option>
+
+
+                    @foreach (var curso in Model.Cursos)
+                    {
+                        <option value="@curso.Id">
+                            @curso.Nome
+                        </option>
+                    }
+
+
+                </select>
+
+
+                <span asp-validation-for="CursoId" class="text-danger">
+                </span>
+
+            </div>
+
+
+
+
+            <div class="d-flex justify-content-between">
+
+
+                <a asp-action="Listar" asp-route-cursoId="@Model.CursoId" class="btn btn-outline-secondary">
+
+                    Voltar
+
+                </a>
+
+
+
+                <button type="submit" class="btn btn-primary">
+
+                    Salvar
+
+                </button>
+
+
+            </div>
+
+
+
+        </form>
+
+
+    </div>
+
+</div>

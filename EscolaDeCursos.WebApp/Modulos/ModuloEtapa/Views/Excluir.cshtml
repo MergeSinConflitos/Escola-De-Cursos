@@ -1,0 +1,78 @@
+﻿@using EscolaDeCursos.WebApp.Modulos.ModuloEtapa
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Excluir Etapa";
+}
+
+@model ExcluirEtapaViewModel
+
+
+<div class="card shadow-sm">
+
+    <div class="card-header bg-danger text-white">
+
+        <h5 class="mb-0">
+            Excluir Etapa
+        </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="alert alert-warning">
+
+            Tem certeza que deseja excluir esta etapa?
+
+        </div>
+
+
+
+        <div class="mb-3">
+
+            <strong>
+                Nome:
+            </strong>
+
+            @Model.Nome
+
+        </div>
+
+
+
+        <form asp-action="Excluir" method="post">
+
+
+            <input asp-for="Id" type="hidden" />
+
+
+
+            <div class="d-flex justify-content-between">
+
+
+                <a asp-action="Listar" class="btn btn-outline-secondary">
+
+                    Cancelar
+
+                </a>
+
+
+
+                <button type="submit" class="btn btn-danger">
+
+                    Confirmar Exclusão
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+</div>

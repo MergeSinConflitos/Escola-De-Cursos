@@ -1,0 +1,211 @@
+﻿@using EscolaDeCursos.WebApp.Modulos.ModuloEtapa
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Listagem de Etapas";
+}
+
+@model List<ListarEtapasViewModel>
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Cadastrar" asp-route-cursoId="@ViewBag.CursoId">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1"
+             viewBox="0 0 16 16">
+
+            <path fill-rule="evenodd"
+                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+
+        </svg>
+
+        Cadastrar Nova
+
+    </a>
+
+</div>
+
+
+
+@if (TempData["MensagemErro"] is string erro)
+{
+    <div class="alert alert-danger">
+        @erro
+    </div>
+}
+
+
+@if (TempData["MensagemSucesso"] is string sucesso)
+{
+    <div class="alert alert-success">
+        @sucesso
+    </div>
+}
+
+
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Nenhuma etapa encontrada.
+    </div>
+}
+else
+{
+    <div class="row g-4">
+
+        <form asp-action="Listar" method="get" class="mb-4">
+
+            <div class="row g-2">
+
+
+                <div class="col-md-5">
+
+                    <input type="text" name="pesquisa" value="@ViewBag.Pesquisa" class="form-control"
+                           placeholder="Pesquisar etapa..." />
+
+                </div>
+
+
+
+                <div class="col-md-5">
+
+                    <select name="cursoId" class="form-select">
+
+                        <option value="">
+                            Todos os cursos
+                        </option>
+
+
+                        @foreach (var curso in ViewBag.Cursos)
+                        {
+                            <option value="@curso.Id" selected="@(curso.Id == ViewBag.CursoId)">
+                                @curso.Nome
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-primary w-100">
+                        Pesquisar
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </form>
+        @foreach (var etapa in Model)
+        {
+            var idCurto = etapa.Id.ToString("N")[..7];
+
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card h-100 shadow-sm">
+
+
+                    <div class="card-header bg-primary text-white 
+                        d-flex justify-content-between align-items-center">
+
+
+                        <strong>
+                            @etapa.Nome
+                        </strong>
+
+
+                        <span class="badge bg-light text-dark">
+                            #@idCurto
+                        </span>
+
+
+                    </div>
+
+
+
+                    <div class="card-body">
+
+
+                        <p>
+                            <strong>Nome:</strong>
+                            @etapa.Nome
+                        </p>
+
+
+                        <p>
+                            <strong>Duração:</strong>
+                            @etapa.Duracao horas
+                        </p>
+
+
+                        <p>
+                            <strong>Ordem:</strong>
+                            @etapa.Ordem
+                        </p>
+
+
+                        <p>
+                            <strong>Curso:</strong>
+                            @etapa.CursoNome
+                        </p>
+
+
+                    </div>
+
+
+
+                    <div class="card-footer bg-white">
+
+
+                        <div class="btn-group w-100">
+
+
+                            <a class="btn btn-primary" asp-action="Editar" asp-route-id="@etapa.Id">
+
+                                Editar
+
+                            </a>
+
+
+
+                            <a class="btn btn-outline-danger" asp-action="Excluir" asp-route-id="@etapa.Id">
+
+                                Excluir
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+}
+
+
+
+<style>
+    .card {
+        transition: all .2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .15);
+    }
+</style>

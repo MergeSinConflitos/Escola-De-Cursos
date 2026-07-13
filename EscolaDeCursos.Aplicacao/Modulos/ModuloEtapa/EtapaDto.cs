@@ -37,3 +37,8 @@ public record DetalhesEtapaDto(
     Guid CursoId,
     string CursoNome
 );
+
+public record OpcaoCursoDto(
+    Guid Id,
+    string Nome
+);

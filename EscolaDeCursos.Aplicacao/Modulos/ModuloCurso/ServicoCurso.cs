@@ -1,6 +1,7 @@
 using System;
 
 using EscolaDeCursos.Aplicacao.Compartilhado;
+using EscolaDeCursos.Aplicacao.Modulos.ModuloEtapa;
 using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
 using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using EscolaDeCursos.Dominio.Modulos.ModuloNivelDeDificuldade;
@@ -148,6 +149,17 @@ public class ServicoCurso : ServicoBase<Curso>
                 curso.NivelDeDificuldade.Nome
             )
         );
+    }
+
+    public List<OpcaoCursoDto> SelecionarOpcoes()
+    {
+        return repositorioCurso
+            .SelecionarTodos()
+            .Select(c => new OpcaoCursoDto(
+                c.Id,
+                c.Nome
+            ))
+            .ToList();
     }
 
     public List<ListarCursosDto> PesquisarPorNome(string nome)

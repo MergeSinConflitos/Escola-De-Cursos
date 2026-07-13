@@ -30,7 +30,26 @@ public class ServicoEtapa : ServicoBase<Etapa>
         if (curso == null)
             return Falha(nameof(dto.CursoId), "Curso não encontrado.");
 
+        if (ExisteEtapaComMesmoNome(
+        dto.Nome,
+        dto.CursoId))
+        {
+            return Falha(
+                nameof(dto.Nome),
+                "Já existe uma etapa com esse nome neste curso."
+            );
+        }
 
+
+        if (ExisteEtapaComMesmaOrdem(
+                dto.Ordem,
+                dto.CursoId))
+        {
+            return Falha(
+                nameof(dto.Ordem),
+                "Já existe uma etapa com essa ordem neste curso."
+            );
+        }
 
         Etapa novaEtapa = new(
             dto.Nome,
@@ -69,7 +88,28 @@ public class ServicoEtapa : ServicoBase<Etapa>
         if (curso == null)
             return Falha(nameof(dto.CursoId), "Curso não encontrado.");
 
+        if (ExisteEtapaComMesmoNome(
+        dto.Nome,
+        dto.CursoId,
+        dto.Id))
+        {
+            return Falha(
+                nameof(dto.Nome),
+                "Já existe uma etapa com esse nome neste curso."
+            );
+        }
 
+
+        if (ExisteEtapaComMesmaOrdem(
+                dto.Ordem,
+                dto.CursoId,
+                dto.Id))
+        {
+            return Falha(
+                nameof(dto.Ordem),
+                "Já existe uma etapa com essa ordem neste curso."
+            );
+        }
 
         Etapa etapaAtualizada = new(
             dto.Nome,
@@ -173,13 +213,43 @@ public class ServicoEtapa : ServicoBase<Etapa>
     }
 
 
-
+    public List<ListarEtapasDto> Pesquisar(
+    string pesquisa,
+    Guid? cursoId)
+    {
+        return repositorioEtapa
+            .SelecionarTodos()
+            .Where(e =>
+                (string.IsNullOrEmpty(pesquisa) ||
+                 e.Nome.ToLower().Contains(pesquisa.ToLower()))
+                &&
+                (!cursoId.HasValue ||
+                 e.Curso.Id == cursoId.Value)
+            )
+            .Select(e => new ListarEtapasDto(
+                e.Id,
+                e.Nome,
+                e.Duracao,
+                e.Ordem,
+                e.Curso.Id,
+                e.Curso.Nome
+            ))
+            .ToList();
+    }
 
 
     public List<ListarEtapasDto> SelecionarPorCurso(Guid cursoId)
     {
+        var etapas = repositorioEtapa.SelecionarTodos();
+
+        foreach (var etapa in etapas)
+        {
+            Console.WriteLine($"Etapa: {etapa.Nome} - Curso: {etapa.Curso?.Id}");
+        }
         return repositorioEtapa
-            .Filtrar(e => e.Curso.Id == cursoId)
+            .SelecionarTodos()
+            .Where(e => e.Curso != null &&
+                        e.Curso.Id == cursoId)
             .Select(e => new ListarEtapasDto(
                 e.Id,
                 e.Nome,
@@ -193,22 +263,35 @@ public class ServicoEtapa : ServicoBase<Etapa>
 
 
 
-
     private bool ExisteEtapaComMesmoNome(
-        string nome,
-        Guid cursoId,
-        Guid? idIgnorado = null)
+      string nome,
+      Guid cursoId,
+      Guid? idIgnorado = null)
     {
         string nomeNormalizado =
             nome.Trim().ToLower();
 
 
-
         return repositorioEtapa
-            .Filtrar(e => e.Curso.Id == cursoId)
+            .Filtrar(e => e.Curso != null &&
+                          e.Curso.Id == cursoId)
             .Any(e =>
                 e.Id != idIgnorado &&
                 e.Nome.Trim().ToLower() == nomeNormalizado
+            );
+    }
+
+    private bool ExisteEtapaComMesmaOrdem(
+     int ordem,
+     Guid cursoId,
+     Guid? idIgnorado = null)
+    {
+        return repositorioEtapa
+            .Filtrar(e => e.Curso != null &&
+                          e.Curso.Id == cursoId)
+            .Any(e =>
+                e.Id != idIgnorado &&
+                e.Ordem == ordem
             );
     }
 }
