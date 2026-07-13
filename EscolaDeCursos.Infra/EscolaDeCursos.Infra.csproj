@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Compartilhado\Orm\Config\" />
     <Folder Include="Modulos\" />
     <Folder Include="Modulos\ModuloCategoria\" />
   </ItemGroup>
