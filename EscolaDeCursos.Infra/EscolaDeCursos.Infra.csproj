@@ -25,6 +25,7 @@
     <Folder Include="Compartilhado\Orm\Config\" />
     <Folder Include="Modulos\" />
     <Folder Include="Modulos\ModuloCategoria\" />
+    <Folder Include="Modulos\ModuloNivelDeDificuldade\" />
   </ItemGroup>
 
 </Project>
