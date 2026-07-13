@@ -18,7 +18,6 @@ public sealed class EscolaDeCursosDbContext(
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Ignore<NivelDeDificuldade>();
         modelBuilder.Ignore<Curso>();
         modelBuilder.Ignore<Etapa>();
 
