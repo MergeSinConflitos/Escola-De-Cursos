@@ -26,6 +26,7 @@
     <Folder Include="Modulos\" />
     <Folder Include="Modulos\ModuloCategoria\" />
     <Folder Include="Modulos\ModuloCurso\" />
+    <Folder Include="Modulos\ModuloEtapa\" />
     <Folder Include="Modulos\ModuloNivelDeDificuldade\" />
   </ItemGroup>
 
