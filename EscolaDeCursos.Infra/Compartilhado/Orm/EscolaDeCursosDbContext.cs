@@ -18,7 +18,6 @@ public sealed class EscolaDeCursosDbContext(
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Ignore<Curso>();
         modelBuilder.Ignore<Etapa>();
 
         Assembly assembly = typeof(EscolaDeCursosDbContext).Assembly;
