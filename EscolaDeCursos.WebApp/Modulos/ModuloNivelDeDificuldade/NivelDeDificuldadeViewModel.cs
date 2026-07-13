@@ -25,7 +25,7 @@ public record CadastrarNivelDeDificuldadeViewModel(
 
 
     [Required(ErrorMessage = "A classificação deve ser selecionada.")]
-    Classificacao Classificacao
+    Classificacao? Classificacao
 );
 
 

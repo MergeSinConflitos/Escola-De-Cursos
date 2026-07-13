@@ -43,7 +43,7 @@ public class NivelDeDificuldadeController(
         CadastrarNivelDeDificuldadeViewModel cadastrarVm = new CadastrarNivelDeDificuldadeViewModel(
             string.Empty,
             string.Empty,
-            Classificacao.Basico
+            null
         );
 
         return View(cadastrarVm);
