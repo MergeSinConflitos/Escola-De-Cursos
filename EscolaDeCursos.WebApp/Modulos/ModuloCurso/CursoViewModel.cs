@@ -71,5 +71,8 @@ public record EditarCursoViewModel(
 
 public record ExcluirCursoViewModel(
     Guid Id,
-    string Nome
+    string Nome,
+    int CargaHoraria,
+    string CategoriaNome,
+    string NivelDeDificuldadeNome
 );

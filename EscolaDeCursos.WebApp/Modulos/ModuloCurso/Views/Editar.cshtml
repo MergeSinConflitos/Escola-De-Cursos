@@ -2,22 +2,24 @@
 
 @{
     Layout = "_Layout";
-    ViewBag.Titulo = "Cadastrar Curso";
+    ViewBag.Titulo = "Editar Curso";
 }
 
-@model CadastrarCursoViewModel
+@model EditarCursoViewModel
 
 
 <div class="card shadow-sm">
 
     <div class="card-header bg-primary text-white">
-        <h5 class="mb-0">Cadastrar Novo Curso</h5>
+        <h5 class="mb-0">Editar Curso</h5>
     </div>
 
 
     <div class="card-body">
 
-        <form asp-action="Cadastrar" method="post">
+        <form asp-action="Editar" method="post">
+
+            <input type="hidden" asp-for="Id" />
 
 
             <div class="mb-3">
@@ -26,7 +28,7 @@
                     Nome
                 </label>
 
-                <input asp-for="Nome" class="form-control" placeholder="Digite o nome do curso" />
+                <input asp-for="Nome" class="form-control" />
 
                 <span asp-validation-for="Nome" class="text-danger">
                 </span>
@@ -41,7 +43,7 @@
                     Carga Horária
                 </label>
 
-                <input asp-for="CargaHoraria" class="form-control" placeholder="Digite a carga horária" />
+                <input asp-for="CargaHoraria" class="form-control" />
 
                 <span asp-validation-for="CargaHoraria" class="text-danger">
                 </span>
@@ -81,7 +83,6 @@
 
 
 
-
             <div class="mb-3">
 
                 <label asp-for="NivelDeDificuldadeId" class="form-label">
@@ -113,7 +114,6 @@
 
 
 
-
             <div class="d-flex justify-content-between">
 
                 <a asp-action="Listar" class="btn btn-outline-secondary">
@@ -125,7 +125,7 @@
 
                 <button type="submit" class="btn btn-primary">
 
-                    Salvar
+                    Salvar alterações
 
                 </button>
 
@@ -137,5 +137,3 @@
     </div>
 
 </div>
-
-
