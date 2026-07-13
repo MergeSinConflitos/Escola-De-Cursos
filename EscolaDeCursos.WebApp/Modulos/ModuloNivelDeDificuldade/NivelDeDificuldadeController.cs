@@ -203,4 +203,14 @@ public class NivelDeDificuldadeController(
 
         return RedirectToAction(nameof(Listar));
     }
+
+    [HttpGet]
+    public ActionResult Cursos(Guid id)
+    {
+        return RedirectToAction(
+            "Listar",
+            "Curso",
+            new { nivelDeDificuldadeId = id }
+        );
+    }
 }
