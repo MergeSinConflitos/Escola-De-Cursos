@@ -186,7 +186,41 @@ public class ServicoNivelDeDificuldade : ServicoBase<NivelDeDificuldade>
     }
 
 
+    public List<ListarNivelDeDificuldadeDto> Pesquisar(
+    string? nome,
+    Classificacao? classificacao)
+    {
+        List<NivelDeDificuldade> niveis =
+            repositorioNivelDeDificuldade.SelecionarTodos();
 
+
+        if (!string.IsNullOrWhiteSpace(nome))
+        {
+            string nomeNormalizado = nome.Trim().ToLower();
+
+            niveis = niveis
+                .Where(n => n.Nome.ToLower().Contains(nomeNormalizado))
+                .ToList();
+        }
+
+
+        if (classificacao.HasValue)
+        {
+            niveis = niveis
+                .Where(n => n.Classificacao == classificacao.Value)
+                .ToList();
+        }
+
+
+        return niveis
+            .Select(n => new ListarNivelDeDificuldadeDto(
+                n.Id,
+                n.Nome,
+                n.Descricao,
+                n.Classificacao
+            ))
+            .ToList();
+    }
 
 
 

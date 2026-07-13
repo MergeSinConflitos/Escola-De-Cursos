@@ -1,4 +1,5 @@
 using EscolaDeCursos.Aplicacao.Modulos.ModuloCategoria;
+using EscolaDeCursos.Aplicacao.Modulos.ModuloNivelDeDificuldade;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,5 +13,6 @@ public static class InjecaoDependencia
     )
     {
         services.AddScoped<ServicoCategoria>();
+        services.AddScoped<ServicoNivelDeDificuldade>();
     }
 }
