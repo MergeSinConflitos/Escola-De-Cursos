@@ -1,6 +1,7 @@
 using System;
 using EscolaDeCursos.Dominio.Compartilhado;
 using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
+using EscolaDeCursos.Dominio.Modulos.ModuloEtapa;
 using EscolaDeCursos.Dominio.Modulos.ModuloNivelDeDificuldade;
 
 namespace EscolaDeCursos.Dominio.Modulos.ModuloCurso;
@@ -11,6 +12,7 @@ public class Curso : EntidadeBase<Curso>
     public int CargaHoraria { get; set; }
     public Categoria Categoria { get; set; }
     public NivelDeDificuldade NivelDeDificuldade { get; set; }
+    public List<Etapa> Etapas { get; set; } = new List<Etapa>();
 
     public Curso(string nome, int cargaHoraria, Categoria categoria, NivelDeDificuldade nivelDeDificuldade)
     {
