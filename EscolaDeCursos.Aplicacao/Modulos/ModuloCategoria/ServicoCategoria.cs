@@ -130,4 +130,17 @@ public class ServicoCategoria : ServicoBase<Categoria>
     {
         return nome.Trim().ToLowerInvariant();
     }
+
+    public List<ListarCategoriasDto> PesquisarPorNome(string nome)
+    {
+        string nomeNormalizado = nome.Trim().ToLower();
+
+        return repositorioCategoria
+            .Filtrar(c => c.Nome.ToLower().Contains(nomeNormalizado))
+            .Select(c => new ListarCategoriasDto(
+                c.Id,
+                c.Nome
+            ))
+            .ToList();
+    }
 }

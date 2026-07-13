@@ -1,5 +1,7 @@
+using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
 using EscolaDeCursos.Infra.Comartilhado.Logging;
 using EscolaDeCursos.Infra.Compartilhado.Orm;
+using EscolaDeCursos.Infra.Modulos.ModuloCategoria;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,5 +42,7 @@ public static class InjecaoDependencia
                 opt.EnableRetryOnFailure(3);
             });
         });
+
+        services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmOrm>();
     }
 }

@@ -22,4 +22,10 @@
     <ProjectReference Include="..\EscolaDeCursos.Infra\EscolaDeCursos.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Modulos\" />
+    <Folder Include="Modulos\ModuloCategoria\" />
+    <Folder Include="Modulos\ModuloCategoria\Views\" />
+  </ItemGroup>
+
 </Project>
