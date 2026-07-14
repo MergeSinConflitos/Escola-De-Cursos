@@ -1,3 +1,6 @@
 {
-  "dotnet.defaultSolution": "EscolaDeCursos.slnx"
+  "dotnet.defaultSolution": "EscolaDeCursos.slnx",
+  "dataworkspace.excludedProjects": [
+    "EscolaDeCursos/EscolaDeCursos.sqlproj"
+  ]
 }
