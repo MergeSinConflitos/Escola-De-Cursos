@@ -14,7 +14,7 @@ public class NivelDeDificuldade : EntidadeBase<NivelDeDificuldade>
 {
     public string Nome { get; set; }
     public string? Descricao { get; set; }
-    public Classificacao? Classificacao { get; set; }
+    public Classificacao Classificacao { get; set; }
 
     public NivelDeDificuldade(string nome, string? descricao, Classificacao classificacao)
     {
