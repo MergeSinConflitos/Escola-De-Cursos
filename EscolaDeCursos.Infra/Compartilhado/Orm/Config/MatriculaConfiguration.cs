@@ -1,12 +1,10 @@
-using System;
 using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EscolaDeCursos.Infra.Compartilhado.Orm.Config;
-
-public class MatriculaConfiguration : IEntityTypeConfiguration<Matricula>
+public sealed class MatriculaConfiguration : IEntityTypeConfiguration<Matricula>
 {
-    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Matricula> builder)
+    public void Configure(EntityTypeBuilder<Matricula> builder)
     {
         builder.ToTable("TBMatricula");
 
@@ -21,17 +19,21 @@ public class MatriculaConfiguration : IEntityTypeConfiguration<Matricula>
             .IsRequired();
 
         builder.Property(m => m.Situacao)
-            .HasColumnType("int")
             .IsRequired();
+
 
         builder.HasOne(m => m.Aluno)
             .WithMany()
             .HasForeignKey("AlunoId")
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
 
         builder.HasOne(m => m.Turma)
             .WithMany(t => t.Matriculas)
             .HasForeignKey("TurmaId")
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
     }
+
 }

@@ -1,4 +1,3 @@
-
 using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,31 +11,31 @@ public sealed class InstrutorConfiguration : IEntityTypeConfiguration<Instrutor>
         builder.ToTable("TBInstrutor");
 
         builder.HasKey(i => i.Id)
-        .HasName("PK_TBInstrutor");
+            .HasName("PK_TBInstrutor");
 
         builder.Property(i => i.Id)
-        .ValueGeneratedNever();
+            .ValueGeneratedNever();
 
         builder.Property(i => i.Nome)
-        .HasMaxLength(100)
-        .IsRequired();
+            .HasMaxLength(100)
+            .IsRequired();
 
         builder.Property(i => i.Telefone)
-        .HasMaxLength(15)
-        .IsRequired();
+            .HasMaxLength(15)
+            .IsRequired();
 
         builder.Property(i => i.Email)
-        .HasMaxLength(100)
-        .IsRequired();
+            .HasMaxLength(100)
+            .IsRequired();
 
         builder.Property(i => i.Cpf)
-        .HasMaxLength(11)
-        .IsRequired();
+            .HasMaxLength(11)
+            .IsRequired();
 
         builder.HasIndex(i => i.Email)
-        .IsUnique();
+            .IsUnique();
 
         builder.HasIndex(i => i.Cpf)
-        .IsUnique();
+            .IsUnique();
     }
 }

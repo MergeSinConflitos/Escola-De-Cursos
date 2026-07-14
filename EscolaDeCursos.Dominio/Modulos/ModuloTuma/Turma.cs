@@ -4,20 +4,20 @@ using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 
-public class Turma: EntidadeBase<Turma>
+public class Turma : EntidadeBase<Turma>
 {
     public string Nome { get; set; }
-    public string Periodo { get; set; }
+    public int Periodo { get; set; }
     public DateTime DataInicio { get; set; }
     public DateTime DataTermino { get; set; }
     public int QuantidadeMaxAlunos { get; set; }
-    public Curso Curso { get; set; } 
-    public Instrutor Instrutor { get; set; } 
+    public Curso Curso { get; set; }
+    public Instrutor Instrutor { get; set; }
     public List<Matricula> Matriculas { get; set; } = new List<Matricula>();
 
-    public Turma(){}
+    public Turma() { }
 
-    public Turma(string nome, string periodo, DateTime dataInicio, DateTime dataTermino, int quantidadeMaxAlunos, Curso curso, Instrutor instrutor)
+    public Turma(string nome, int periodo, DateTime dataInicio, DateTime dataTermino, int quantidadeMaxAlunos, Curso curso, Instrutor instrutor)
     {
         Nome = nome;
         Periodo = periodo;
@@ -28,7 +28,7 @@ public class Turma: EntidadeBase<Turma>
         Instrutor = instrutor;
     }
 
-     public bool EstaCheia() 
+    public bool EstaCheia()
     {
         return Matriculas.Count >= QuantidadeMaxAlunos;
     }
@@ -44,16 +44,16 @@ public class Turma: EntidadeBase<Turma>
 
     public override List<string> Validar()
     {
-       List<string> erros = new List<string>();
+        List<string> erros = new List<string>();
 
         if (string.IsNullOrWhiteSpace(Nome))
             erros.Add("O campo \"Nome\" é obrigatório.");
         else if (Nome.Length < 2 || Nome.Length > 100)
             erros.Add("O campo \"Nome\" deve conter entre 2 e 100 caracteres.");
 
-        if (string.IsNullOrWhiteSpace(Periodo))
+        if (Periodo == null)
             erros.Add("O período da turma é obrigatório.");
-            
+
         if (DataInicio == default)
             erros.Add("O campo \"Data de Início\" é obrigatório.");
 

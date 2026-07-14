@@ -1,11 +1,10 @@
-
+using EscolaDeCursos.Dominio.Modulos.ModuloTuma;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
 namespace EscolaDeCursos.Infra.Compartilhado.Orm.Config;
 
-public class TurmaConfiguration : IEntityTypeConfiguration<Turma>
+public sealed class TurmaConfiguration : IEntityTypeConfiguration<Turma>
 {
     public void Configure(EntityTypeBuilder<Turma> builder)
     {
@@ -22,14 +21,12 @@ public class TurmaConfiguration : IEntityTypeConfiguration<Turma>
             .IsRequired();
 
         builder.Property(t => t.Periodo)
-            .HasColumnType("int")
             .IsRequired();
 
         builder.Property(t => t.DataInicio)
             .HasColumnType("date")
             .IsRequired();
 
-        
         builder.Property(t => t.DataTermino)
             .HasColumnType("date")
             .IsRequired();
@@ -37,20 +34,28 @@ public class TurmaConfiguration : IEntityTypeConfiguration<Turma>
         builder.Property(t => t.QuantidadeMaxAlunos)
             .IsRequired();
 
+
+        // Toda turma deve possuir exatamente um curso
         builder.HasOne(t => t.Curso)
             .WithMany()
             .HasForeignKey("CursoId")
-            .IsRequired();
-        
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+        // Toda turma deve possuir exatamente um instrutor
         builder.HasOne(t => t.Instrutor)
             .WithMany()
             .HasForeignKey("InstrutorId")
-            .IsRequired();
-    
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+        // Uma turma possui várias matrículas
         builder.HasMany(t => t.Matriculas)
             .WithOne(m => m.Turma)
             .HasForeignKey("TurmaId")
+            .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
-        
     }
 }

@@ -18,14 +18,16 @@ public sealed class EscolaDeCursosDbContext(
     public DbSet<NivelDeDificuldade> NivelDeDificuldades => Set<NivelDeDificuldade>();
     public DbSet<Curso> Cursos => Set<Curso>();
     public DbSet<Etapa> Etapas => Set<Etapa>();
-    public DbSet<Matricula> Matriculas => Set<Matricula>();
     public DbSet<Aluno> Alunos => Set<Aluno>();
+    public DbSet<Instrutor> Instrutors => Set<Instrutor>();
     public DbSet<Turma> Turmas => Set<Turma>();
-    public DbSet<Instrutor> Instrutores => Set<Instrutor>();
+    public DbSet<Matricula> Matriculas => Set<Matricula>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
         Assembly assembly = typeof(EscolaDeCursosDbContext).Assembly;
+
 
         modelBuilder.ApplyConfigurationsFromAssembly(assembly);
     }
