@@ -4,7 +4,7 @@ using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 
 namespace EscolaDeCursos.Dominio.Modulos.ModuloEtapa;
 
-public class Etapa : EntidadeBase<Etapa>
+public class Etapa : EntidadeBase<Etapa> //modulo modulo
 {
     public string Nome { get; set; }
     public int Duracao { get; set; }

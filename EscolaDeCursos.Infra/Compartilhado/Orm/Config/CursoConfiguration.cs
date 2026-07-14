@@ -12,28 +12,28 @@ public sealed class CursoConfiguration : IEntityTypeConfiguration<Curso>
         builder.ToTable("TB_Curso");
 
         builder.HasKey(c => c.Id)
-               .HasName("PK_TBCurso");
+              .HasName("PK_TBCurso");
 
         builder.Property(c => c.Id)
         .ValueGeneratedNever();
 
         builder.Property(c => c.Nome)
-               .IsRequired()
-               .HasMaxLength(100);
+              .IsRequired()
+              .HasMaxLength(100);
 
         builder.Property(c => c.CargaHoraria)
-               .IsRequired();
+              .IsRequired();
 
         builder.HasIndex(c => c.Nome)
-               .IsUnique();
+              .IsUnique();
 
         builder.HasOne(c => c.Categoria)
-               .WithMany();
+              .WithMany();
 
         builder.HasOne(c => c.NivelDeDificuldade)
-               .WithMany();
+              .WithMany();
 
         builder.HasMany(c => c.Etapas)
-               .WithOne(e => e.Curso);
+              .WithOne(e => e.Curso);
     }
 }

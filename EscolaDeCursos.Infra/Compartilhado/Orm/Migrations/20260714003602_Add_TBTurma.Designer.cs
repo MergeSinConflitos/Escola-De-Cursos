@@ -4,6 +4,7 @@ using EscolaDeCursos.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
 {
     [DbContext(typeof(EscolaDeCursosDbContext))]
-    partial class EscolaDeCursosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260714003602_Add_TBTurma")]
+    partial class Add_TBTurma
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,13 +172,14 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
             modelBuilder.Entity("EscolaDeCursos.Dominio.Modulos.ModuloMatricula.Matricula", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AlunoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataInscricao")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("int");
@@ -183,14 +187,13 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.Property<Guid>("TurmaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id")
-                        .HasName("PK_TBMatricula");
+                    b.HasKey("Id");
 
                     b.HasIndex("AlunoId");
 
                     b.HasIndex("TurmaId");
 
-                    b.ToTable("TBMatricula", (string)null);
+                    b.ToTable("Matriculas");
                 });
 
             modelBuilder.Entity("EscolaDeCursos.Dominio.Modulos.ModuloNivelDeDificuldade.NivelDeDificuldade", b =>
@@ -289,7 +292,7 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasOne("EscolaDeCursos.Dominio.Modulos.ModuloAluno.Aluno", "Aluno")
                         .WithMany()
                         .HasForeignKey("AlunoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Turma", "Turma")
