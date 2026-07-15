@@ -25,7 +25,6 @@ public class MatriculaController(ServicoMatricula servicoMatricula, IMapper mape
             null,
             null,
             DateTime.Now,
-            0,
             SelecionarAlunos(),
             SelecionarTurmas()
         );

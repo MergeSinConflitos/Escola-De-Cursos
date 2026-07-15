@@ -37,14 +37,14 @@ public class ServicoMatricula : ServicoBase<Matricula>
             return Falha(nameof(dto.TurmaId), "Turma não encontrada.");
 
         
-        if (!Enum.IsDefined(typeof(SituacaoMatricula), dto.Situacao))
-            return Falha(nameof(dto.Situacao), "Situação inválida.");
+        /*if (!Enum.IsDefined(typeof(SituacaoMatricula), dto.Situacao))
+            return Falha(nameof(dto.Situacao), "Situação inválida.");*/
 
         
         Matricula novaMatricula = new(aluno, turma)
         {
             DataInscricao = dto.DataInscricao,
-            Situacao = (SituacaoMatricula)dto.Situacao
+            //Situacao = (SituacaoMatricula)dto.Situacao
         };
 
         
@@ -100,19 +100,27 @@ public class ServicoMatricula : ServicoBase<Matricula>
         return Result.Ok();
     }
 
-    public List<ListarMatriculasDto> SelecionarTodos()
+    public List<ListarMatriculasDto> SelecionarTodos() //edit testing
     {
         var matriculas = repositorioMatricula.SelecionarTodos();
 
-        return matriculas.Select(m => new ListarMatriculasDto(
-            m.Id,
-            m.DataInscricao,
-            m.Situacao.ToString(),
-            m.Aluno.Nome,
-            m.Turma.Nome,
-            m.Turma.Curso.Nome,
-            m.Turma.Instrutor.Nome
-        )).ToList();
+        return matriculas.Select(m => {
+            
+            string alunoNome = m.Aluno?.Nome ?? "Aluno não vinculado";
+            string turmaNome = m.Turma?.Nome ?? "Turma não vinculada";
+            string cursoNome = m.Turma?.Curso?.Nome ?? "Curso não vinculado";
+            string instrutorNome = m.Turma?.Instrutor?.Nome ?? "Instrutor não vinculado";
+
+            return new ListarMatriculasDto(
+                m.Id,
+                m.DataInscricao,
+                m.Situacao.ToString(),
+                alunoNome,
+                turmaNome,
+                cursoNome,
+                instrutorNome
+            );
+        }).ToList();
     }
 
     public List<ListarMatriculasDto> SelecionarPorAluno(Guid alunoId)
@@ -161,7 +169,7 @@ public class ServicoMatricula : ServicoBase<Matricula>
         return Result.Ok(new DetalhesMatriculaDto(
             matricula.Id,
             matricula.DataInscricao,
-            matricula.Situacao.ToString(),
+            matricula.Situacao,
             matricula.Aluno.Id,
             matricula.Aluno.Nome,
             matricula.Aluno.Email,

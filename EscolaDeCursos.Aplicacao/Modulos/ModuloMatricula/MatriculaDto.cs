@@ -1,3 +1,5 @@
+using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
+
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloMatricula;
 
 
@@ -15,21 +17,21 @@ public record ListarMatriculasDto(
 public record CadastrarMatriculaDto(
     Guid AlunoId,
     Guid TurmaId,
-    DateTime DataInscricao,
-    int Situacao 
+    DateTime DataInscricao
+    
 );
 
 
 public record EditarMatriculaDto(
     Guid Id,
-    int Situacao
+    SituacaoMatricula Situacao
 );
 
 
 public record DetalhesMatriculaDto(
     Guid Id,
     DateTime DataInscricao,
-    string Situacao,
+    SituacaoMatricula Situacao,
     Guid AlunoId,
     string AlunoNome,
     string AlunoEmail,

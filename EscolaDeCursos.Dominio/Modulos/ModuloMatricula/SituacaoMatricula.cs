@@ -2,7 +2,7 @@ namespace EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 
 public enum SituacaoMatricula
 {
-    Ativa = 1,
-    Cancelada = 2,
-    Concluida =3
+    Ativa = 0,
+    Cancelada = 1,
+    Concluida = 2
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace EscolaDeCursos.WebApp.Modulos.ModuloMatricula;
@@ -26,8 +27,7 @@ public record CadastrarMatriculaViewModel(
     [Required(ErrorMessage = "A data de inscrição é obrigatória.")]
     DateTime DataInscricao,
 
-    [Required(ErrorMessage = "Selecione uma situação.")]
-    int Situacao,
+    
 
     [ValidateNever]
     List<OpcaoAlunoViewModel> Alunos,
@@ -39,7 +39,7 @@ public record CadastrarMatriculaViewModel(
 public record EditarMatriculaViewModel(
     Guid Id,
     [Required(ErrorMessage = "Selecione uma situação.")]
-    int Situacao
+    SituacaoMatricula Situacao
 );
 
 public record CancelarMatriculaViewModel(Guid Id, string AlunoNome, string TurmaNome);

@@ -7,7 +7,7 @@ namespace EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 public class Matricula : EntidadeBase<Matricula>
 {
     public DateTime DataInscricao { get; set; }
-    public SituacaoMatricula Situacao { get; set; }
+    public SituacaoMatricula Situacao { get; set; } = SituacaoMatricula.Ativa;
     public Aluno Aluno { get; set; } 
     public Turma Turma { get; set; } 
 
@@ -18,7 +18,7 @@ public class Matricula : EntidadeBase<Matricula>
         Aluno = aluno;
         Turma = turma;
         DataInscricao = DateTime.Now; 
-        Situacao = SituacaoMatricula.Ativa;
+
     }
 
     public void Cancelar()
