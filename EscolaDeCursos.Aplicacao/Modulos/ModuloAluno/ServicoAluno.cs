@@ -1,6 +1,3 @@
-
-
-
 using EscolaDeCursos.Aplicacao.Compartilhado;
 using EscolaDeCursos.Dominio.Modulos.ModuloAluno;
 using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
@@ -84,7 +81,8 @@ public class ServicoAluno : ServicoBase<Aluno>
             .ToList();
     }
 
-    public Result<DetalhesAlunoDto> SelecionarPorId(Guid id){
+    public Result<DetalhesAlunoDto> SelecionarPorId(Guid id)
+    {
         
         Aluno? aluno = repositorioAluno.SelecionarPorId(id);
 
