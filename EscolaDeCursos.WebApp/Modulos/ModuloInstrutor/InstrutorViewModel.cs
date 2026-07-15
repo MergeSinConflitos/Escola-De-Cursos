@@ -1,15 +1,16 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace EscolaDeCursos.WebApp.Modulos.ModuloAluno;
+namespace EscolaDeCursos.WebApp.Modulos.ModuloInstrutor;
 
-public record ListarAlunosViewModel(
+public record ListarInstrutorViewModel(
     Guid Id,
     string Nome,
     string Telefone,
-    string Email
+    string Email,
+    string Cpf
 );
 
-public record CadastrarAlunoViewModel(
+public record CadastrarInstrutorViewModel(
     [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido.")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "O campo \"Nome\" deve conter entre 2 e 100 caracteres.")]
     string Nome,
@@ -20,12 +21,19 @@ public record CadastrarAlunoViewModel(
 
     [Required(ErrorMessage = "O campo \"Email\" deve ser preenchido.")]
     [EmailAddress(ErrorMessage = "O campo \"Email\" deve ser um endereço de email válido.")]
-    string Email
+    string Email,
+
+    [Required(ErrorMessage = "O campo CPF é obrigatório")]
+    [RegularExpression(
+      @"^\d{11}$",
+        ErrorMessage = "CPF inválido, deve ter 11 digitos")]
+    string Cpf
+
 );
 
-public record EditarAlunoViewModel(
+public record EditarInstrutorViewModel(
     Guid Id,
-    
+
     [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido.")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "O campo \"Nome\" deve conter entre 2 e 100 caracteres.")]
     string Nome,
@@ -36,12 +44,20 @@ public record EditarAlunoViewModel(
 
     [Required(ErrorMessage = "O campo \"Email\" deve ser preenchido.")]
     [EmailAddress(ErrorMessage = "O campo \"Email\" deve ser um endereço de email válido.")]
-    string Email
+    string Email,
+
+    [Required(ErrorMessage = "O campo CPF é obrigatório")]
+    [RegularExpression(
+      @"^\d{11}$",
+        ErrorMessage = "CPF inválido, deve ter 11 digitos")]
+    string Cpf
+
 );
 
-public record ExcluirAlunoViewModel(
+public record ExcluirInstrutorViewModel(
     Guid Id,
     string Nome,
     string Telefone,
-    string Email
+    string Email,
+    string Cpf
 );
