@@ -1,0 +1,49 @@
+@using EscolaDeCursos.WebApp.Modulos.ModuloTurma
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Excluir Turma";
+}
+
+@model ExcluirTurmaViewModel
+
+<div class="card shadow-sm border-danger">
+    <div class="card-header bg-danger text-white">
+        <h5 class="mb-0">Confirmar Exclusão</h5>
+    </div>
+
+    <div class="card-body">
+        <div class="alert alert-warning">
+            <strong>Atenção!</strong> Você está prestes a excluir a turma abaixo. Esta ação não pode ser desfeita.
+        </div>
+
+        <div class="mb-4">
+            <h4 class="text-primary">@Model.Nome</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">Período:</dt>
+                <dd class="col-sm-8">@Model.Periodo</dd>
+
+                <dt class="col-sm-4">Data de Início:</dt>
+                <dd class="col-sm-8">@Model.DataInicio.ToString("dd/MM/yyyy")</dd>
+
+                <dt class="col-sm-4">Data de Término:</dt>
+                <dd class="col-sm-8">@Model.DataTermino.ToString("dd/MM/yyyy")</dd>
+
+                <dt class="col-sm-4">Curso:</dt>
+                <dd class="col-sm-8">@Model.CursoNome</dd>
+
+                <dt class="col-sm-4">Instrutor:</dt>
+                <dd class="col-sm-8">@Model.InstrutorNome</dd>
+            </dl>
+        </div>
+
+        <form asp-action="Excluir" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-action="Listar" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+            </div>
+        </form>
+    </div>
+</div>

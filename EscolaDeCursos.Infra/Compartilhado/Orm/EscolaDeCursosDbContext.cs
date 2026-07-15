@@ -6,6 +6,7 @@ using EscolaDeCursos.Dominio.Modulos.ModuloEtapa;
 using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 using EscolaDeCursos.Dominio.Modulos.ModuloNivelDeDificuldade;
+using EscolaDeCursos.Dominio.Modulos.ModuloTuma;
 using Microsoft.EntityFrameworkCore;
 
 namespace EscolaDeCursos.Infra.Compartilhado.Orm;

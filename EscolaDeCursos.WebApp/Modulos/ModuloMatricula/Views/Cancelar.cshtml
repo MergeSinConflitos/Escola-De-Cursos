@@ -1,0 +1,36 @@
+@using EscolaDeCursos.WebApp.Modulos.ModuloMatricula
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Cancelar Matrícula";
+}
+
+@model CancelarMatriculaViewModel
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;"
+      asp-action="Cancelar" method="post">
+
+    <h4 class="text-danger mb-4">Cancelar Matrícula</h4>
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold text-primary text-uppercase small">Aluno</label>
+        <input asp-for="AlunoNome" type="text" class="form-control" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold text-primary text-uppercase small">Turma</label>
+        <input asp-for="TurmaNome" type="text" class="form-control" disabled>
+    </div>
+
+    <div class="alert alert-warning rounded-3" role="alert">
+        Tem certeza que deseja cancelar esta matrícula?
+        Esta ação não poderá ser desfeita.
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+        <button class="btn btn-danger rounded-pill px-4" type="submit">Confirmar Cancelamento</button>
+    </div>
+
+</form>

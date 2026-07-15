@@ -1,0 +1,142 @@
+@using EscolaDeCursos.WebApp.Modulos.ModuloMatricula
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Listagem de Matrículas";
+}
+
+@model List<ListarMatriculasViewModel>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Cadastrar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1"
+             viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+        </svg>
+        Nova Matrícula
+    </a>
+</div>
+
+@if (TempData["MensagemErro"] is string erro)
+{
+    <div class="alert alert-danger">
+        @erro
+    </div>
+}
+
+@if (TempData["MensagemSucesso"] is string sucesso)
+{
+    <div class="alert alert-success">
+        @sucesso
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Nenhuma matrícula encontrada.
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var matricula in Model)
+        {
+            var idCurto = matricula.Id.ToString("N")[..7];
+
+            
+            var badgeClass = matricula.Situacao switch
+            {
+                "Ativa"     => "bg-success",
+                "Cancelada" => "bg-danger",
+                "Concluida" => "bg-secondary",
+                _           => "bg-primary"
+            };
+
+            var headerClass = matricula.Situacao switch
+            {
+                "Ativa"     => "bg-success",
+                "Cancelada" => "bg-danger",
+                "Concluida" => "bg-secondary",
+                _           => "bg-primary"
+            };
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+
+                    <div class="card-header @headerClass text-white
+                        d-flex justify-content-between align-items-center">
+                        <strong>@matricula.AlunoNome</strong>
+                        <span class="badge bg-light text-dark">
+                            #@idCurto
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+                        <p>
+                            <strong>Aluno:</strong>
+                            @matricula.AlunoNome
+                        </p>
+                        <p>
+                            <strong>Turma:</strong>
+                            @matricula.TurmaNome
+                        </p>
+                        <p>
+                            <strong>Curso:</strong>
+                            @matricula.CursoNome
+                        </p>
+                        <p>
+                            <strong>Instrutor:</strong>
+                            @matricula.InstrutorNome
+                        </p>
+                        <p>
+                            <strong>Data de Inscrição:</strong>
+                            @matricula.DataInscricao.ToString("dd/MM/yyyy")
+                        </p>
+                        <p>
+                            <strong>Situação:</strong>
+                            <span class="badge @badgeClass">
+                                @matricula.Situacao
+                            </span>
+                        </p>
+                    </div>
+
+                    <div class="card-footer bg-white">
+                        <div class="btn-group w-100">
+
+                            @if (matricula.Situacao == "Ativa")
+                            {
+                                <a class="btn btn-primary" asp-action="Editar"
+                                   asp-route-id="@matricula.Id">
+                                    Editar
+                                </a>
+                                <a class="btn btn-outline-danger" asp-action="Cancelar"
+                                   asp-route-id="@matricula.Id">
+                                    Cancelar
+                                </a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-secondary w-100" disabled>
+                                    @matricula.Situacao
+                                </button>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<style>
+    .card {
+        transition: all .2s ease-in-out;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .15);
+    }
+</style>

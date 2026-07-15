@@ -1,0 +1,75 @@
+@using EscolaDeCursos.WebApp.Modulos.ModuloAluno
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Excluir Aluno";
+}
+
+@model ExcluirAlunoViewModel
+
+
+<div class="card shadow-sm border-danger">
+
+
+    <div class="card-header bg-danger text-white">
+
+        <h5 class="mb-0">
+            Excluir Aluno
+        </h5>
+
+    </div>
+
+
+
+    <div class="card-body">
+
+
+        <p class="fs-5">
+            Tem certeza que deseja excluir este Aluno?
+        </p>
+
+
+        <div class="alert alert-warning">
+
+            <strong>
+                Aluno:
+            </strong>
+
+            @Model.Nome
+
+        </div>
+
+
+
+        <form asp-action="Excluir" method="post">
+
+            <input asp-for="Id" type="hidden" />
+
+
+            <div class="d-flex justify-content-between">
+
+
+                <a class="btn btn-outline-secondary" asp-action="Listar">
+
+                    Cancelar
+
+                </a>
+
+
+
+                <button type="submit" class="btn btn-danger">
+
+                    Confirmar Exclusão
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
