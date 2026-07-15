@@ -1,0 +1,130 @@
+@using EscolaDeCursos.WebApp.Modulos.ModuloTurma
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Listagem de Turmas";
+}
+
+@model List<ListarTurmaViewModel>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0 text-gray-800">@ViewBag.Titulo</h1>
+
+    <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Cadastrar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+        </svg>
+        Cadastrar Nova Turma
+    </a>
+</div>
+
+@if (TempData["MensagemErro"] is string erro)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @erro
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["MensagemSucesso"] is string sucesso)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @sucesso
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle me-2" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+        </svg>
+        Nenhuma turma encontrada.
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var turma in Model)
+        {
+            var idCurto = turma.Id.ToString("N")[..7];
+            
+            var badgeClasse = turma.EstaCheia ? "bg-danger" : "bg-success";
+            var estadoTexto = turma.EstaCheia ? "Cheia" : "Disponível";
+            var periodoTexto = turma.Periodo; 
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    
+                    
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-2">
+                        <strong class="text-truncate" style="max-width: 180px;">@turma.Nome</strong>
+                        <span class="badge bg-light text-dark" style="font-size: 0.75rem;">#@idCurto</span>
+                    </div>
+
+                    <div class="card-body">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge @badgeClasse">@estadoTexto</span>
+                            <span class="text-muted small">@turma.TotalAlunosMatriculados / @turma.QuantidadeMaxAlunos Alunos</span>
+                        </div>
+
+                        <p class="mb-2">
+                            <strong><i class="bi bi-calendar-event me-1"></i> Período:</strong>
+                            @periodoTexto
+                        </p>
+                        
+                        <p class="mb-2">
+                            <strong><i class="bi bi-calendar-range me-1"></i> Início:</strong>
+                            @turma.DataInicio.ToString("dd/MM/yyyy")
+                        </p>
+                        
+                        <p class="mb-2">
+                            <strong><i class="bi bi-calendar-check me-1"></i> Término:</strong>
+                            @turma.DataTermino.ToString("dd/MM/yyyy")
+                        </p>
+
+                        <hr class="my-2" />
+
+                        <p class="mb-1 small">
+                            <strong>Curso:</strong> @turma.CursoNome
+                        </p>
+                        <p class="mb-0 small">
+                            <strong>Instrutor:</strong> @turma.InstrutorNome
+                        </p>
+                    </div>
+
+                    <div class="card-footer bg-white border-0 pt-0 pb-2">
+                        <div class="btn-group w-100">
+                            
+                            
+                            <a class="btn btn-primary btn-sm" asp-action="Editar" asp-route-id="@turma.Id">
+                                Editar
+                            </a>
+                            <a class="btn btn-outline-danger btn-sm" asp-action="Excluir" asp-route-id="@turma.Id">
+                                Excluir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<style>
+    .card {
+        transition: all .2s ease-in-out;
+        border-radius: 0.5rem;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+    }
+    .text-truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
