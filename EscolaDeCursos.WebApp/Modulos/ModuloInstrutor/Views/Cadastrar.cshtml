@@ -1,17 +1,17 @@
-@using EscolaDeCursos.WebApp.Modulos.ModuloAluno
+@using EscolaDeCursos.WebApp.Modulos.ModuloInstrutor
 @{
     Layout = "_Layout";
-    ViewBag.Titulo = "Cadastrar Aluno";
+    ViewBag.Titulo = "Cadastrar Instrutor";
 }
 
-@model CadastrarAlunoViewModel
+@model CadastrarInstrutorViewModel
 
 
 <div class="card shadow-sm">
 
     <div class="card-header bg-primary text-white">
         <h5 class="mb-0">
-            Cadastrar Novo Aluno
+            Cadastrar Novo Instrutor
         </h5>
     </div>
 
@@ -28,7 +28,7 @@
                 </label>
 
 
-                <input asp-for="Nome" class="form-control" placeholder="Digite o nome do Aluno" />
+                <input asp-for="Nome" class="form-control" placeholder="Digite o nome do Instrutor" />
 
 
                 <span asp-validation-for="Nome" class="text-danger">
@@ -63,6 +63,21 @@
 
 
                 <span asp-validation-for="Email" class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="Cpf" class="form-label">
+                    CPF
+                </label>
+
+
+                <input asp-for="Cpf" class="form-control" placeholder="Digite o CPF" />
+
+
+                <span asp-validation-for="Cpf" class="text-danger">
                 </span>
 
             </div>
