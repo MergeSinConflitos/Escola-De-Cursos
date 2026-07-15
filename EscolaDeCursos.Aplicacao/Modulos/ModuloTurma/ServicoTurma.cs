@@ -116,53 +116,64 @@ public class ServicoTurma : ServicoBase<Turma>
     }
 
 
-    public List<ListarTurmasDto> SelecionarTodos()
-    {
+    public List<ListarTurmasDto> SelecionarTodos() //modificado testenado
+    { 
         var turmas = repositorioTurma.SelecionarTodos();
 
-        return turmas.Select(t => new ListarTurmasDto(
+        return turmas.Select(t => {
+        
+        int totalAlunos = t.Matriculas?.Count ?? 0;
+        bool estaCheia = totalAlunos >= t.QuantidadeMaxAlunos;
+        
+        return new ListarTurmasDto(
             t.Id,
-            t.Nome,
+            t.Nome ?? string.Empty,
             t.Periodo.ToString(),
             t.DataInicio,
             t.DataTermino,
             t.QuantidadeMaxAlunos,
-            t.Curso.Nome,
-            t.Instrutor.Nome,
-            t.Matriculas?.Count ?? 0,
-            t.EstaCheia() 
-        )).ToList();
+            t.Curso?.Nome ?? "Curso não vinculado", 
+            t.Instrutor?.Nome ?? "Instrutor não vinculado", 
+            totalAlunos,
+            estaCheia
+        );
+        }).ToList();
     }
 
     
-    public Result<DetalhesTurmaDto> SelecionarPorId(Guid id)
+    public Result<DetalhesTurmaDto> SelecionarPorId(Guid id) //editado teste
     {
         Turma? turma = repositorioTurma.SelecionarPorId(id);
 
         if (turma == null)
             return Result.Fail("Turma não encontrada.");
 
+        
         var alunosDto = (turma.Matriculas ?? new List<Matricula>()).Select(m => new AlunoMatriculadoDto(
             m.Id,
-            m.Aluno.Nome,
-            m.Aluno.Email,
-            m.DataInscricao, 
-            m.Situacao.ToString() 
+            m.Aluno?.Nome ?? "Aluno não vinculado", 
+            m.Aluno?.Email ?? "Email não cadastrado", 
+            m.DataInscricao,
+            m.Situacao.ToString()
         )).ToList();
+
+        
+        int periodoInt = (int)turma.Periodo; 
+        string periodoNome = turma.Periodo.ToString();
 
         return Result.Ok(
             new DetalhesTurmaDto(
                 turma.Id,
-                turma.Nome,
-                (int)turma.Periodo,
-                turma.Periodo.ToString(),
+                turma.Nome ?? string.Empty,
+                periodoInt,
+                periodoNome,
                 turma.DataInicio,
                 turma.DataTermino,
                 turma.QuantidadeMaxAlunos,
-                turma.Curso.Id,
-                turma.Curso.Nome,
-                turma.Instrutor.Id,
-                turma.Instrutor.Nome,
+                turma.Curso?.Id ?? Guid.Empty, 
+                turma.Curso?.Nome ?? "Curso não vinculado", 
+                turma.Instrutor?.Id ?? Guid.Empty, 
+                turma.Instrutor?.Nome ?? "Instrutor não vinculado", 
                 alunosDto
             )
         );

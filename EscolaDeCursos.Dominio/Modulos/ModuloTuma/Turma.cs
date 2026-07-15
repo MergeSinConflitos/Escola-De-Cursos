@@ -31,12 +31,12 @@ public class Turma : EntidadeBase<Turma>
 
     public bool EstaCheia()
     {
-        return Matriculas.Count >= QuantidadeMaxAlunos;
+        return (Matriculas?.Count ?? 0) >= QuantidadeMaxAlunos;
     }
 
-    public bool PossuiMatriculas()  //Pra nao excluir turma com matriculas ativas
+    public bool PossuiMatriculas()  
     {
-        return Matriculas.Count > 0;
+        return (Matriculas?.Count ?? 0) > 0;
     }
     public bool PodeSerExcluida(int totalMatriculasAtivas)
     {
