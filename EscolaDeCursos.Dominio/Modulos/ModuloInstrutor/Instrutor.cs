@@ -4,10 +4,10 @@ namespace EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 
 public class Instrutor : EntidadeBase<Instrutor>
 {
-    public string Nome { get; set; } = string.Empty;
-    public string Telefone { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string Cpf { get; set; } = string.Empty;
+    public string Nome { get; set; } 
+    public string Telefone { get; set; } 
+    public string Email { get; set; } 
+    public string Cpf { get; set; } 
 
     public Instrutor() { }
 

@@ -1,6 +1,8 @@
+namespace EscolaDeCursos.Dominio.Modulos.ModuloTuma;
+
 public enum Periodo
 {
-    Manha,
-    Tarde,
-    Noite
+    Manha = 1,
+    Tarde = 2,
+    Noite = 3
 }

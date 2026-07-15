@@ -1,5 +1,6 @@
 using EscolaDeCursos.Dominio.Compartilhado;
 using EscolaDeCursos.Dominio.Modulos.ModuloAluno;
+using EscolaDeCursos.Dominio.Modulos.ModuloTuma;
 
 namespace EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 
