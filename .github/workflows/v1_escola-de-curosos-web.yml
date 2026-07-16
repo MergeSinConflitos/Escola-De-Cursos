@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - Escola-De-Curosos-Web
+name: Build and deploy ASP.Net Core app to Azure Web App - Escola-De-Cursos-Web
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.x'
+          dotnet-version: "10.x"
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -43,37 +43,58 @@ jobs:
       contents: read #This is required for actions/checkout
 
     steps:
+      - uses: actions/checkout@v4 # inclui os arquivos do repositório
+
+      - name: Set up .NET Core # instala o dotnet no ambiente
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.x"
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Install Entity Framework CLI
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Apply ORM migrations to Azure SQL
+        env:
+          AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+          Infra__NewRelic__LicenseKey: ${{ secrets.NEWRELIC_LICENSE_KEY }}
+        run: |
+          dotnet ef database update `
+            --project EscolaDeCursos.Infra/EscolaDeCursos.Infra.csproj `
+            --startup-project EscolaDeCursos.WebApp/EscolaDeCursos.WebApp.csproj `
+            --configuration Release `
+            --connection "$env:AZURE_SQL_CONNECTION_STRING"
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_882D8B2B91D14084AC56185C9EF4B313 }}
+          client-id: ${{  secrets.AZUREAPPSERVICE_CLIENTID_882D8B2B91D14084AC56185C9EF4B313 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A14DECE162D54474B321F2B2E602B651 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_48879968871A4945B873973307BB5143 }}
-        
+
       - name: Configure Azure Web App settings
         shell: pwsh
         run: |
-          az webapp config appsetting set `
-             --resource-group "Escola-De-Cursos-Web" `
-             --name "Escola-De-Cursos-Web" `
-             --settings `
+          az webapp config appsettings set `
+            --resource-group "Escola-De-Cursos-Web" `
+            --name "Escola-De-Cursos-Web" `
+            --settings `
               "ASPNETCORE_ENVIRONMENT=Production" `
-              "ConnectionStrings__SqlServerEF=${{ secrets.AZURE_SQL_CONNECTION_STRING}}" `
-              "Logging__NewRelic__LicenseKey=${{ secrets.NEWRELIC_LICENSE_KEY }}" `
+              "ConnectionStrings__SqlServerEF=${{ secrets.AZURE_SQL_CONNECTION_STRING }}" `
+              "Infra__NewRelic__LicenseKey=${{ secrets.NEWRELIC_LICENSE_KEY }}" `
               "AutoMapper__LicenseKey=${{ secrets.AUTOMAPER_LICENSE_KEY }}"
-
-
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'Escola-De-Curosos-Web'
-          slot-name: 'Production'
+          app-name: "Escola-De-Curso-Web"
+          slot-name: "Production"
           package: .
-          
