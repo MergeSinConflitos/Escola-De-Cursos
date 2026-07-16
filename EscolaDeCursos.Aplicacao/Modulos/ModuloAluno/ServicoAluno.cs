@@ -8,6 +8,7 @@ namespace EscolaDeCursos.Aplicacao.Modulos.ModuloAluno;
 public class ServicoAluno : ServicoBase<Aluno>
 {
     private readonly IRepositorioAluno repositorioAluno;
+    
     private readonly IRepositorioMatricula repositorioMatricula;
 
     public ServicoAluno(IRepositorioAluno repositorioAluno, IRepositorioMatricula repositorioMatricula)
@@ -135,5 +136,6 @@ public class ServicoAluno : ServicoBase<Aluno>
             ))
             .ToList();
     }
+
 
 }

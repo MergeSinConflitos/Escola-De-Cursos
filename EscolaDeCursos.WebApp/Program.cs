@@ -4,7 +4,7 @@ using EscolaDeCursos.WebApp.Compartilhado;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+//coment
 // Configuração do container de injeção de dependência
 
 builder.Services.AddInfraRepositories(builder.Configuration, builder.Logging);
@@ -13,6 +13,7 @@ builder.Services.AddPresentationConfig(builder.Configuration);
 
 
 var app = builder.Build();
+
 
 
 // Pipeline da aplicação
