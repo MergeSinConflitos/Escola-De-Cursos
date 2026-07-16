@@ -18,9 +18,9 @@
 
     <div class="card-body">
 
-        <form asp-action="Cadastrar" method="post">
+        <form asp-action="Editar" method="post">
 
-
+            <input asp-for="Id" type="hidden" />
             <div class="mb-3">
 
                 <label asp-for="Nome" class="form-label">
@@ -59,7 +59,7 @@
                 </label>
 
 
-                <input asp-for="Email" class="form-control"  />
+                <input asp-for="Email" class="form-control" />
 
 
                 <span asp-validation-for="Email" class="text-danger">
@@ -67,14 +67,14 @@
 
             </div>
 
-             <div class="mb-3">
+            <div class="mb-3">
 
                 <label asp-for="Cpf" class="form-label">
                     CPF
                 </label>
 
 
-                <input asp-for="Cpf" class="form-control"  />
+                <input asp-for="Cpf" class="form-control" />
 
 
                 <span asp-validation-for="Cpf" class="text-danger">
