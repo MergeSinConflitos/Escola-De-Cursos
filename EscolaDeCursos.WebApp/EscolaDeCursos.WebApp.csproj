@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <Folder Include="Modulos\" />
+    <Folder Include="Modulos\ModuloAutenticacao\" />
+    <Folder Include="Modulos\ModuloAutenticacao\Views\" />
     <Folder Include="Modulos\ModuloCategoria\" />
     <Folder Include="Modulos\ModuloCategoria\Views\" />
     <Folder Include="Modulos\ModuloCurso\" />

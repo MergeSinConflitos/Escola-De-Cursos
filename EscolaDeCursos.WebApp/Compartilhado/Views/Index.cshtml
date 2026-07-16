@@ -1,6 +1,8 @@
 @{
     Layout = "_Layout";
     ViewBag.Titulo = "Página Inicial";
+
+    bool logado = User.Identity?.IsAuthenticated == true;
 }
 
 <style>
@@ -17,21 +19,29 @@
         opacity: .15;
     }
 
+
     .modulo-card {
+
         border: none;
         border-radius: 18px;
         overflow: hidden;
         transition: .35s ease;
         cursor: pointer;
         position: relative;
+
     }
+
 
     .modulo-card:hover {
+
         transform: translateY(-10px);
         box-shadow: 0 1rem 2rem rgba(0, 0, 0, .18) !important;
+
     }
 
+
     .modulo-card::before {
+
         content: "";
         position: absolute;
         top: 0;
@@ -43,59 +53,136 @@
                 rgba(255, 255, 255, .35),
                 transparent);
         transition: .8s;
+
     }
+
 
     .modulo-card:hover::before {
+
         left: 150%;
+
     }
+
 
     .modulo-card i {
+
         font-size: 3.2rem;
         transition: .35s;
+
     }
+
 
     .modulo-card:hover i {
+
         transform: scale(1.15);
+
     }
+
 
     .modulo-card h5 {
+
         transition: .35s;
+
     }
+
 
     .modulo-card:hover h5 {
+
         color: #0d6efd;
+
     }
 
-    .modulo-card p {
-        font-size: .9rem;
+
+
+    .bloqueado {
+
+        opacity: .65;
+        cursor: not-allowed;
+
+    }
+
+
+    .bloqueado:hover {
+
+        transform: none;
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .10) !important;
+
+    }
+
+
+    .cadeado {
+
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        color: #6c757d;
+        font-size: 1.3rem;
+
     }
 </style>
 
+
+
 <div class="container py-5">
+
 
     <!-- Banner -->
 
     <div class="hero shadow">
 
+
         <div class="row align-items-center">
 
+
             <div class="col-lg-8">
+
 
                 <h1 class="display-5 fw-bold">
 
                     <i class="bi bi-mortarboard-fill me-2"></i>
+
                     Sistema de Gerenciamento Acadêmico
 
                 </h1>
 
-                <p class="lead mt-3 mb-0">
 
-                    Centralize o gerenciamento de cursos, alunos, instrutores,
-                    turmas, categorias, níveis, etapas e matrículas em um único sistema.
+                <p class="lead mt-3">
+
+                    Gerencie cursos, alunos, instrutores,
+                    turmas e matrículas em um único lugar.
 
                 </p>
 
+
+
+                @if (!logado)
+                {
+
+                    <a asp-controller="Autenticacao" asp-action="Entrar" class="btn btn-light rounded-pill px-4 mt-3">
+
+                        <i class="bi bi-box-arrow-in-right me-2"></i>
+
+                        Entrar no Sistema
+
+                    </a>
+                }
+                else
+                {
+
+                    <p class="mt-3">
+
+                        <i class="bi bi-check-circle me-2"></i>
+
+                        Bem-vindo ao painel administrativo.
+
+                    </p>
+
+                }
+
+
             </div>
+
+
 
             <div class="col-lg-4 text-end d-none d-lg-block">
 
@@ -103,251 +190,182 @@
 
             </div>
 
+
         </div>
+
 
     </div>
 
+
+
+
+    @if (!logado)
+    {
+
+        <div class="alert alert-info shadow-sm">
+
+            <i class="bi bi-info-circle me-2"></i>
+
+            Faça login para acessar os módulos de gerenciamento.
+
+        </div>
+
+    }
+
+
+
+
+
     <div class="mb-4">
+
 
         <h3 class="fw-bold">
 
             <i class="bi bi-grid-fill text-primary me-2"></i>
+
             Módulos do Sistema
 
         </h3>
 
+
         <p class="text-muted">
-            Selecione um módulo para começar.
+
+            @if (logado)
+            {
+                <span>
+                    Selecione um módulo para começar.
+                </span>
+            }
+            else
+            {
+                <span>
+                    Conheça os recursos disponíveis no sistema.
+                </span>
+            }
+
         </p>
 
+
     </div>
+
+
+
+
 
     <div class="row g-4">
 
-        <!-- Cursos -->
 
-        <div class="col-xl-3 col-lg-4 col-md-6">
+        @{
 
-            <a asp-controller="Curso" asp-action="Listar" class="text-decoration-none text-dark">
+            var modulos = new[]
+            {
+        new { Nome="Cursos", Icone="bi-book", Cor="text-primary", Controller="Curso", Descricao="Cadastro e gerenciamento de cursos." },
+        new { Nome="Alunos", Icone="bi-person-vcard", Cor="text-success", Controller="Aluno", Descricao="Cadastro e consulta de alunos." },
+        new { Nome="Instrutores", Icone="bi-person-workspace", Cor="text-info", Controller="Instrutor",
+        Descricao="Gerenciamento dos instrutores." },
+        new { Nome="Turmas", Icone="bi-building", Cor="text-warning", Controller="Turma", Descricao="Organização das turmas." },
+        new { Nome="Matrículas", Icone="bi-clipboard-check", Cor="text-danger", Controller="Matricula",
+        Descricao="Controle das matrículas." },
+        new { Nome="Categorias", Icone="bi-tags", Cor="text-secondary", Controller="Categoria", Descricao="Categorias dos cursos." },
+        new { Nome="Níveis", Icone="bi-bar-chart-steps", Cor="text-dark", Controller="NivelDeDificuldade",
+        Descricao="Níveis de dificuldade." },
+        new { Nome="Etapas", Icone="bi-journal-bookmark", Cor="text-primary", Controller="Etapa", Descricao="Organização dos módulos do curso." }
+    };
 
-                <div class="card modulo-card shadow-sm h-100">
+        }
 
-                    <div class="card-body text-center py-4">
 
-                        <i class="bi bi-book text-primary"></i>
+        @foreach (var item in modulos)
+        {
 
-                        <h5 class="mt-3">
-                            Cursos
-                        </h5>
+            <div class="col-xl-3 col-lg-4 col-md-6">
 
-                        <p class="text-muted mb-0">
-                            Cadastro e gerenciamento de cursos.
-                        </p>
 
-                    </div>
+                @if (logado)
+                {
 
-                </div>
+                    <a asp-controller="@item.Controller" asp-action="Listar" class="text-decoration-none text-dark">
 
-            </a>
 
-        </div>
+                        <div class="card modulo-card shadow-sm h-100">
 
-        <!-- Alunos -->
 
-        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="card-body text-center py-4">
 
-            <a asp-controller="Aluno" asp-action="Listar" class="text-decoration-none text-dark">
 
-                <div class="card modulo-card shadow-sm h-100">
+                                <i class="bi @item.Icone @item.Cor"></i>
 
-                    <div class="card-body text-center py-4">
 
-                        <i class="bi bi-person-vcard text-success"></i>
+                                <h5 class="mt-3">
 
-                        <h5 class="mt-3">
-                            Alunos
-                        </h5>
+                                    @item.Nome
 
-                        <p class="text-muted mb-0">
-                            Cadastro e consulta de alunos.
-                        </p>
+                                </h5>
 
-                    </div>
 
-                </div>
+                                <p class="text-muted mb-0">
 
-            </a>
+                                    @item.Descricao
 
-        </div>
+                                </p>
 
-        <!-- Instrutores -->
 
-        <div class="col-xl-3 col-lg-4 col-md-6">
+                            </div>
 
-            <a asp-controller="Instrutor" asp-action="Listar" class="text-decoration-none text-dark">
 
-                <div class="card modulo-card shadow-sm h-100">
+                        </div>
 
-                    <div class="card-body text-center py-4">
 
-                        <i class="bi bi-person-workspace text-info"></i>
+                    </a>
 
-                        <h5 class="mt-3">
-                            Instrutores
-                        </h5>
 
-                        <p class="text-muted mb-0">
-                            Gerenciamento dos instrutores.
-                        </p>
+                }
+                else
+                {
 
-                    </div>
 
-                </div>
+                    <div class="card modulo-card bloqueado shadow-sm h-100">
 
-            </a>
 
-        </div>
+                        <i class="bi bi-lock-fill cadeado"></i>
 
-        <!-- Turmas -->
 
-        <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="card-body text-center py-4">
 
-            <a asp-controller="Turma" asp-action="Listar" class="text-decoration-none text-dark">
 
-                <div class="card modulo-card shadow-sm h-100">
+                            <i class="bi @item.Icone @item.Cor"></i>
 
-                    <div class="card-body text-center py-4">
 
-                        <i class="bi bi-building text-warning"></i>
+                            <h5 class="mt-3">
 
-                        <h5 class="mt-3">
-                            Turmas
-                        </h5>
+                                @item.Nome
 
-                        <p class="text-muted mb-0">
-                            Organização das turmas.
-                        </p>
+                            </h5>
+
+
+                            <p class="text-muted mb-0">
+
+                                @item.Descricao
+
+                            </p>
+
+
+                        </div>
+
 
                     </div>
 
-                </div>
 
-            </a>
+                }
 
-        </div>
 
-        <!-- Matrículas -->
+            </div>
 
-        <div class="col-xl-3 col-lg-4 col-md-6">
 
-            <a asp-controller="Matricula" asp-action="Listar" class="text-decoration-none text-dark">
+        }
 
-                <div class="card modulo-card shadow-sm h-100">
-
-                    <div class="card-body text-center py-4">
-
-                        <i class="bi bi-clipboard-check text-danger"></i>
-
-                        <h5 class="mt-3">
-                            Matrículas
-                        </h5>
-
-                        <p class="text-muted mb-0">
-                            Controle das matrículas.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        <!-- Categorias -->
-
-        <div class="col-xl-3 col-lg-4 col-md-6">
-
-            <a asp-controller="Categoria" asp-action="Listar" class="text-decoration-none text-dark">
-
-                <div class="card modulo-card shadow-sm h-100">
-
-                    <div class="card-body text-center py-4">
-
-                        <i class="bi bi-tags text-secondary"></i>
-
-                        <h5 class="mt-3">
-                            Categorias
-                        </h5>
-
-                        <p class="text-muted mb-0">
-                            Categorias dos cursos.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        <!-- Níveis -->
-
-        <div class="col-xl-3 col-lg-4 col-md-6">
-
-            <a asp-controller="NivelDeDificuldade" asp-action="Listar" class="text-decoration-none text-dark">
-
-                <div class="card modulo-card shadow-sm h-100">
-
-                    <div class="card-body text-center py-4">
-
-                        <i class="bi bi-bar-chart-steps text-dark"></i>
-
-                        <h5 class="mt-3">
-                            Níveis
-                        </h5>
-
-                        <p class="text-muted mb-0">
-                            Níveis de dificuldade.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        <!-- Etapas -->
-
-        <div class="col-xl-3 col-lg-4 col-md-6">
-
-            <a asp-controller="Etapa" asp-action="Listar" class="text-decoration-none text-dark">
-
-                <div class="card modulo-card shadow-sm h-100">
-
-                    <div class="card-body text-center py-4">
-
-                        <i class="bi bi-journal-bookmark text-primary"></i>
-
-                        <h5 class="mt-3">
-                            Etapas
-                        </h5>
-
-                        <p class="text-muted mb-0">
-                            Organização dos módulos do curso.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </a>
-
-        </div>
 
     </div>
+
 
 </div>
