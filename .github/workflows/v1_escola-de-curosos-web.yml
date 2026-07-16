@@ -84,7 +84,7 @@ jobs:
         run: |
           az webapp config appsettings set `
             --resource-group "Escola-De-Cursos-Web" `
-            --name "Escola-De-Cursos-Web" `
+            --name "Escola-De-Curosos-Web" `
             --settings `
               "ASPNETCORE_ENVIRONMENT=Production" `
               "ConnectionStrings__SqlServerEF=${{ secrets.AZURE_SQL_CONNECTION_STRING }}" `
@@ -95,6 +95,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: "Escola-De-Curso-Web"
+          app-name: "Escola-De-Curosos-Web"
           slot-name: "Production"
           package: .
