@@ -137,5 +137,4 @@ public class ServicoAluno : ServicoBase<Aluno>
             .ToList();
     }
 
-
 }
