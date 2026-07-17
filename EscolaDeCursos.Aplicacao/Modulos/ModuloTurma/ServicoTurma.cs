@@ -182,4 +182,65 @@ public class ServicoTurma : ServicoBase<Turma>
         );
     }
 
+    public List<ListarTurmasDto> Pesquisar(
+       string? nome,
+       string? curso,
+       string? instrutor,
+       string? periodo)
+    {
+        var turmas = repositorioTurma.SelecionarTodos();
+
+        if (!string.IsNullOrWhiteSpace(nome))
+        {
+            turmas = turmas
+                .Where(t => t.Nome.Contains(nome, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        if (!string.IsNullOrWhiteSpace(curso))
+        {
+            turmas = turmas
+                .Where(t => t.Curso != null &&
+                            t.Curso.Nome.Contains(curso, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        if (!string.IsNullOrWhiteSpace(instrutor))
+        {
+            turmas = turmas
+                .Where(t => t.Instrutor != null &&
+                            t.Instrutor.Nome.Contains(instrutor, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        if (!string.IsNullOrWhiteSpace(periodo))
+        {
+            turmas = turmas
+                .Where(t => t.Periodo.ToString().Equals(periodo, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        return turmas.Select(t =>
+        {
+            int totalAlunos = t.Matriculas?.Count ?? 0;
+
+            return new List<ListarTurmasDto>(
+                new[]
+                {
+                new ListarTurmasDto(
+                    t.Id,
+                    t.Nome,
+                    t.Periodo.ToString(),
+                    t.DataInicio,
+                    t.DataTermino,
+                    t.QuantidadeMaxAlunos,
+                    t.Curso?.Nome ?? "Curso não vinculado",
+                    t.Instrutor?.Nome ?? "Instrutor não vinculado",
+                    totalAlunos,
+                    totalAlunos >= t.QuantidadeMaxAlunos
+                )
+                }
+            );
+        }).SelectMany(x => x).ToList();
+    }
 }

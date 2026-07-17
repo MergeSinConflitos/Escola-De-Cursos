@@ -16,16 +16,23 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma
         ServicoInstrutor servicoInstrutor,
         IMapper mapeador) : Controller
     {
-        
+
         [HttpGet]
-        public ActionResult Listar()
+        public ActionResult Listar(
+      string? nome,
+      string? curso,
+      string? instrutor,
+      string? periodo)
         {
-            
-            List<ListarTurmasDto> dtos = servicoTurma.SelecionarTodos();
+            List<ListarTurmasDto> dtos = servicoTurma.Pesquisar(
+                nome,
+                curso,
+                instrutor,
+                periodo);
 
-            List<ListarTurmaViewModel> listarVms = mapeador.Map<List<ListarTurmaViewModel>>(dtos);
+            List<ListarTurmaViewModel> listarVms =
+                mapeador.Map<List<ListarTurmaViewModel>>(dtos);
 
-            
             ViewBag.Cursos = CarregarCursos();
             ViewBag.Instrutores = CarregarInstrutores();
 
@@ -50,7 +57,7 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma
             return View(cadastrarVm);
         }
 
-        
+
         [HttpPost]
         public ActionResult Cadastrar(CadastrarTurmaViewModel cadastrarVm)
         {
@@ -83,7 +90,7 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma
             return RedirectToAction(nameof(Listar));
         }
 
-        
+
         [HttpGet]
         public ActionResult Editar(Guid id)
         {
@@ -106,7 +113,7 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma
             return View(editarVm);
         }
 
-        
+
         [HttpPost]
         public ActionResult Editar(EditarTurmaViewModel editarVm)
         {
@@ -139,7 +146,7 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma
             return RedirectToAction(nameof(Listar));
         }
 
-        
+
         [HttpGet]
         public ActionResult Excluir(Guid id)
         {
@@ -156,7 +163,7 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma
             return View(excluirVm);
         }
 
-        
+
         [HttpPost]
         public ActionResult Excluir(ExcluirTurmaViewModel excluirVm)
         {
@@ -178,7 +185,7 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma
 
         private List<OpcaoInstrutorViewModel> CarregarInstrutores()
         {
-            
+
             return mapeador.Map<List<OpcaoInstrutorViewModel>>(servicoInstrutor.SelecionarOpcoes());
         }
     }

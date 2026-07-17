@@ -42,7 +42,57 @@
     </div>
 }
 
+<!-- Barra de Pesquisa -->
+<div class="card shadow-sm mb-4">
 
+    <div class="card-body">
+
+        <form asp-action="Listar" method="get">
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-md-10">
+
+                    <label class="form-label">
+                        Pesquisar aluno
+                    </label>
+
+                    <input type="text" name="pesquisa" value="@ViewBag.Pesquisa" class="form-control"
+                           placeholder="Digite o nome do aluno..." />
+
+                </div>
+
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-primary w-100" type="submit">
+
+                        <i class="bi bi-search me-1"></i>
+                        Pesquisar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="mt-3">
+
+                <a asp-action="Listar" class="btn btn-outline-secondary">
+
+                    <i class="bi bi-arrow-clockwise me-1"></i>
+                    Limpar
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 @if (!Model.Any())
 {
@@ -52,20 +102,6 @@
 }
 else
 {
-    <form asp-action="Listar" method="get" class="mb-4">
-
-        <div class="input-group">
-
-            <input type="text" name="pesquisa" value="@ViewBag.Pesquisa" class="form-control"
-                   placeholder="Pesquisar aluno pelo nome..." />
-
-            <button class="btn btn-primary" type="submit">
-                Pesquisar
-            </button>
-
-        </div>
-
-    </form>
     <div class="row g-4">
 
         @foreach (var aluno in Model)

@@ -7,16 +7,29 @@ using EscolaDeCursos.Aplicacao.Modulos.ModuloInstrutor;
 namespace EscolaDeCursos.WebApp.Modulos.ModuloInstrutor;
 
 public class InstrutorController(ServicoInstrutor servicoInstrutor, IMapper mapeador) : Controller
-{   
+{
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar(string pesquisa)
     {
-        List<ListarInstrutorDto> dtos = servicoInstrutor.SelecionarTodos();
+        List<ListarInstrutorDto> dtos;
 
-        List<ListarInstrutorViewModel> listarVms = mapeador.Map<List<ListarInstrutorViewModel>>(dtos);
+
+        if (string.IsNullOrWhiteSpace(pesquisa))
+            dtos = servicoInstrutor.SelecionarTodos();
+        else
+            dtos = servicoInstrutor.PesquisarPorNome(pesquisa);
+
+
+        List<ListarInstrutorViewModel> listarVms =
+            mapeador.Map<List<ListarInstrutorViewModel>>(dtos);
+
+
+        ViewBag.Pesquisa = pesquisa;
+
 
         return View(listarVms);
     }
+
 
     [HttpGet]
     public ActionResult Cadastrar()
@@ -108,9 +121,9 @@ public class InstrutorController(ServicoInstrutor servicoInstrutor, IMapper mape
 
         if (resultado.IsFailed)
             TempData.AddErrorMessage(resultado);
-        
+
 
         return RedirectToAction(nameof(Listar));
     }
-    
+
 }
