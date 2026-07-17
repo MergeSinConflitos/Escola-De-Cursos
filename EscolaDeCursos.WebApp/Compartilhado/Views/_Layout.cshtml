@@ -16,278 +16,192 @@
 <body>
     @* Barra de Navegação *@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-
     <div class="container">
 
         <!-- Logo -->
-
         <a class="navbar-brand fw-semibold"
            asp-controller="Home"
            asp-action="Index">
-
             <i class="bi bi-mortarboard-fill text-warning me-2"></i>
-
             Escola de Cursos
-
         </a>
 
-
         <!-- Botão Mobile -->
-
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#menuPrincipal">
-
+                data-bs-target="#menuPrincipal"
+                aria-controls="menuPrincipal"
+                aria-expanded="false"
+                aria-label="Alternar navegação">
             <span class="navbar-toggler-icon"></span>
-
         </button>
 
-
-
-        <div class="collapse navbar-collapse"
-             id="menuPrincipal">
-
+        <div class="collapse navbar-collapse" id="menuPrincipal">
 
             @if (User.Identity?.IsAuthenticated == true)
             {
-
-
-                <!-- Menu Principal -->
-
+                <!-- Menu -->
                 <ul class="navbar-nav me-auto">
 
-
                     <li class="nav-item">
-
                         <a class="nav-link"
                            asp-controller="Home"
                            asp-action="Index">
-
                             <i class="bi bi-house-door me-1"></i>
-
                             Início
-
                         </a>
-
                     </li>
 
-
-
                     <li class="nav-item dropdown">
-
 
                         <a class="nav-link dropdown-toggle"
                            href="#"
                            role="button"
                            data-bs-toggle="dropdown">
-
                             <i class="bi bi-grid me-1"></i>
-
                             Módulos
-
                         </a>
 
-
-
                         <ul class="dropdown-menu shadow">
-
 
                             <li>
                                 <a class="dropdown-item"
                                    asp-controller="Categoria"
                                    asp-action="Listar">
-
                                     <i class="bi bi-tags me-2"></i>
                                     Categorias
-
                                 </a>
                             </li>
-
-
 
                             <li>
                                 <a class="dropdown-item"
                                    asp-controller="Curso"
                                    asp-action="Listar">
-
                                     <i class="bi bi-book me-2"></i>
                                     Cursos
-
                                 </a>
                             </li>
-
-
 
                             <li>
                                 <a class="dropdown-item"
                                    asp-controller="Instrutor"
                                    asp-action="Listar">
-
                                     <i class="bi bi-person-workspace me-2"></i>
                                     Instrutores
-
                                 </a>
                             </li>
-
-
 
                             <li>
                                 <a class="dropdown-item"
                                    asp-controller="Aluno"
                                    asp-action="Listar">
-
                                     <i class="bi bi-person-vcard me-2"></i>
                                     Alunos
-
                                 </a>
                             </li>
-
-
 
                             <li>
                                 <a class="dropdown-item"
                                    asp-controller="Turma"
                                    asp-action="Listar">
-
                                     <i class="bi bi-building me-2"></i>
                                     Turmas
-
                                 </a>
                             </li>
-
-
 
                             <li>
                                 <a class="dropdown-item"
                                    asp-controller="Matricula"
                                    asp-action="Listar">
-
                                     <i class="bi bi-clipboard-check me-2"></i>
                                     Matrículas
-
                                 </a>
                             </li>
-
-
 
                             <li>
                                 <a class="dropdown-item"
                                    asp-controller="NivelDeDificuldade"
                                    asp-action="Listar">
-
                                     <i class="bi bi-bar-chart-steps me-2"></i>
                                     Níveis
-
                                 </a>
                             </li>
-
-
 
                             <li>
                                 <a class="dropdown-item"
                                    asp-controller="Etapa"
                                    asp-action="Listar">
-
                                     <i class="bi bi-journal-bookmark me-2"></i>
                                     Etapas
-
                                 </a>
                             </li>
 
-
                         </ul>
-
 
                     </li>
 
-
                 </ul>
 
-
-
-
                 <!-- Usuário -->
+                <div class="dropdown ms-auto">
 
-
-                <div class="dropdown">
-
-
-                    <button class="btn btn-outline-light rounded-pill btn-sm dropdown-toggle"
+                    <button class="btn btn-outline-light rounded-pill dropdown-toggle"
                             type="button"
                             data-bs-toggle="dropdown">
-
-
-                        <i class="bi bi-person-circle me-1"></i>
-
-
+                        <i class="bi bi-person-circle me-2"></i>
                         @User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value
-
-
                     </button>
-
-
 
                     <ul class="dropdown-menu dropdown-menu-end shadow">
 
-
                         <li>
-
-
                             <h6 class="dropdown-header">
-
                                 <i class="bi bi-person me-2"></i>
-
                                 Conta
-
                             </h6>
-
-
                         </li>
 
-
+                        <li><hr class="dropdown-divider"></li>
 
                         <li>
-
-
                             <form asp-controller="Autenticacao"
                                   asp-action="Sair"
                                   method="post">
 
-
                                 <button type="submit"
                                         class="dropdown-item text-danger">
-
-
                                     <i class="bi bi-box-arrow-right me-2"></i>
-
                                     Sair
-
-
                                 </button>
 
-
                             </form>
-
-
                         </li>
-
 
                     </ul>
 
+                </div>
+            }
+            else
+            {
+                <!-- Botão Entrar -->
+                <div class="ms-auto">
+
+                    <a asp-controller="Autenticacao"
+                       asp-action="Entrar"
+                       class="btn btn-warning rounded-pill px-4 fw-semibold shadow-sm">
+
+                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                        Entrar
+
+                    </a>
 
                 </div>
-
-
             }
-
 
         </div>
 
-
     </div>
-
-
 </nav>
     @* Cabeçalho da Página *@
     <header class="container py-4">

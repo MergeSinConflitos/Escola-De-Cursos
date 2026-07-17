@@ -5,6 +5,7 @@ using EscolaDeCursos.Aplicacao.Modulos.ModuloEtapa;
 using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
 using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using EscolaDeCursos.Dominio.Modulos.ModuloNivelDeDificuldade;
+using EscolaDeCursos.Dominio.Modulos.ModuloTuma;
 using FluentResults;
 
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloCurso;
@@ -14,18 +15,18 @@ public class ServicoCurso : ServicoBase<Curso>
     private readonly IRepositorioCurso repositorioCurso;
     private readonly IRepositorioCategoria repositorioCategoria;
     private readonly IRepositorioNivelDeDificuldade repositorioNivelDeDificuldade;
-    //private readonly IRepositorioTurma repositorioTurma;
+    private readonly IRepositorioTurma repositorioTurma;
 
     public ServicoCurso(
         IRepositorioCurso repositorioCurso,
         IRepositorioCategoria repositorioCategoria,
-        IRepositorioNivelDeDificuldade repositorioNivelDeDificuldade)
-    //IRepositorioTurma repositorioTurma)
+        IRepositorioNivelDeDificuldade repositorioNivelDeDificuldade,
+    IRepositorioTurma repositorioTurma)
     {
         this.repositorioCurso = repositorioCurso;
         this.repositorioCategoria = repositorioCategoria;
         this.repositorioNivelDeDificuldade = repositorioNivelDeDificuldade;
-        //this.repositorioTurma = repositorioTurma;
+        this.repositorioTurma = repositorioTurma;
     }
 
     public Result Cadastrar(CadastrarCursoDto dto)
@@ -104,13 +105,13 @@ public class ServicoCurso : ServicoBase<Curso>
         if (curso == null)
             return Falha(string.Empty, "Curso não encontrado.");
 
-        /*
+
         if (PossuiTurmasVinculadas(id))
             return Falha(
                 string.Empty,
                 "Não é possível excluir este curso, pois existem turmas cadastradas."
             );
-        */
+
 
         repositorioCurso.Excluir(id);
 
@@ -234,14 +235,14 @@ public class ServicoCurso : ServicoBase<Curso>
                 NormalizarNome(c.Nome) == nomeNormalizado);
     }
 
-    /*
+
     private bool PossuiTurmasVinculadas(Guid cursoId)
     {
         return repositorioTurma
             .SelecionarTodos()
             .Any(t => t.Curso.Id == cursoId);
     }
-    */
+
 
     private static string NormalizarNome(string nome)
     {

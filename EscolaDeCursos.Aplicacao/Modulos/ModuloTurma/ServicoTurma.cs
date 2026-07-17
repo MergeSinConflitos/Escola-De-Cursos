@@ -26,7 +26,7 @@ public class ServicoTurma : ServicoBase<Turma>
         this.repositorioInstrutor = repositorioInstrutor;
     }
 
-    
+
     public Result Cadastrar(CadastrarTurmaDto dto)
     {
         Curso? curso = repositorioCurso.SelecionarPorId(dto.CursoId);
@@ -40,7 +40,7 @@ public class ServicoTurma : ServicoBase<Turma>
 
         if (!Enum.IsDefined(typeof(Periodo), dto.Periodo))
             return Falha(nameof(dto.Periodo), "Período inválido.");
-        
+
         Turma novaTurma = new(
             dto.Nome,
             (Periodo)dto.Periodo,
@@ -63,7 +63,7 @@ public class ServicoTurma : ServicoBase<Turma>
     public Result Editar(EditarTurmaDto dto)
     {
         Turma? turmaExistente = repositorioTurma.SelecionarPorId(dto.Id);
-        
+
         if (turmaExistente == null)
             return Falha(string.Empty, "Turma não encontrada.");
 
@@ -107,9 +107,11 @@ public class ServicoTurma : ServicoBase<Turma>
 
         if (turma.PossuiMatriculas())
             return Falha(
-                string.Empty, 
+                string.Empty,
                 "Não é possível excluir turma com matrículas cadastradas."
             );
+
+
 
         repositorioTurma.Excluir(id);
         return Result.Ok();
@@ -117,30 +119,31 @@ public class ServicoTurma : ServicoBase<Turma>
 
 
     public List<ListarTurmasDto> SelecionarTodos() //modificado testenado
-    { 
+    {
         var turmas = repositorioTurma.SelecionarTodos();
 
-        return turmas.Select(t => {
-        
-        int totalAlunos = t.Matriculas?.Count ?? 0;
-        bool estaCheia = totalAlunos >= t.QuantidadeMaxAlunos;
-        
-        return new ListarTurmasDto(
-            t.Id,
-            t.Nome ?? string.Empty,
-            t.Periodo.ToString(),
-            t.DataInicio,
-            t.DataTermino,
-            t.QuantidadeMaxAlunos,
-            t.Curso?.Nome ?? "Curso não vinculado", 
-            t.Instrutor?.Nome ?? "Instrutor não vinculado", 
-            totalAlunos,
-            estaCheia
-        );
+        return turmas.Select(t =>
+        {
+
+            int totalAlunos = t.Matriculas?.Count ?? 0;
+            bool estaCheia = totalAlunos >= t.QuantidadeMaxAlunos;
+
+            return new ListarTurmasDto(
+                t.Id,
+                t.Nome ?? string.Empty,
+                t.Periodo.ToString(),
+                t.DataInicio,
+                t.DataTermino,
+                t.QuantidadeMaxAlunos,
+                t.Curso?.Nome ?? "Curso não vinculado",
+                t.Instrutor?.Nome ?? "Instrutor não vinculado",
+                totalAlunos,
+                estaCheia
+            );
         }).ToList();
     }
 
-    
+
     public Result<DetalhesTurmaDto> SelecionarPorId(Guid id) //editado teste
     {
         Turma? turma = repositorioTurma.SelecionarPorId(id);
@@ -148,17 +151,17 @@ public class ServicoTurma : ServicoBase<Turma>
         if (turma == null)
             return Result.Fail("Turma não encontrada.");
 
-        
+
         var alunosDto = (turma.Matriculas ?? new List<Matricula>()).Select(m => new AlunoMatriculadoDto(
             m.Id,
-            m.Aluno?.Nome ?? "Aluno não vinculado", 
-            m.Aluno?.Email ?? "Email não cadastrado", 
+            m.Aluno?.Nome ?? "Aluno não vinculado",
+            m.Aluno?.Email ?? "Email não cadastrado",
             m.DataInscricao,
             m.Situacao.ToString()
         )).ToList();
 
-        
-        int periodoInt = (int)turma.Periodo; 
+
+        int periodoInt = (int)turma.Periodo;
         string periodoNome = turma.Periodo.ToString();
 
         return Result.Ok(
@@ -170,12 +173,13 @@ public class ServicoTurma : ServicoBase<Turma>
                 turma.DataInicio,
                 turma.DataTermino,
                 turma.QuantidadeMaxAlunos,
-                turma.Curso?.Id ?? Guid.Empty, 
-                turma.Curso?.Nome ?? "Curso não vinculado", 
-                turma.Instrutor?.Id ?? Guid.Empty, 
-                turma.Instrutor?.Nome ?? "Instrutor não vinculado", 
+                turma.Curso?.Id ?? Guid.Empty,
+                turma.Curso?.Nome ?? "Curso não vinculado",
+                turma.Instrutor?.Id ?? Guid.Empty,
+                turma.Instrutor?.Nome ?? "Instrutor não vinculado",
                 alunosDto
             )
         );
     }
+
 }

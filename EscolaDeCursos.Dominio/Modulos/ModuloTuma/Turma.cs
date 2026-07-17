@@ -18,7 +18,7 @@ public class Turma : EntidadeBase<Turma>
 
     public Turma() { }
 
-    public Turma(string nome,Periodo periodo, DateTime dataInicio, DateTime dataTermino, int quantidadeMaxAlunos, Curso curso, Instrutor instrutor)
+    public Turma(string nome, Periodo periodo, DateTime dataInicio, DateTime dataTermino, int quantidadeMaxAlunos, Curso curso, Instrutor instrutor)
     {
         Nome = nome;
         Periodo = periodo;
@@ -34,7 +34,8 @@ public class Turma : EntidadeBase<Turma>
         return (Matriculas?.Count ?? 0) >= QuantidadeMaxAlunos;
     }
 
-    public bool PossuiMatriculas()  
+
+    public bool PossuiMatriculas()
     {
         return (Matriculas?.Count ?? 0) > 0;
     }
