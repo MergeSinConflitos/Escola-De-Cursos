@@ -4,6 +4,7 @@ using EscolaDeCursos.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
 {
     [DbContext(typeof(EscolaDeCursosDbContext))]
-    partial class EscolaDeCursosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260720194000_Add_Identity_UserId")]
+    partial class Add_Identity_UserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +51,7 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id")
                         .HasName("PK_TBAluno");
 
-                    b.HasIndex("UserId", "Email")
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("TBAluno", (string)null);
@@ -70,7 +73,7 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id")
                         .HasName("PK_TBCategoria");
 
-                    b.HasIndex("UserId", "Nome")
+                    b.HasIndex("Nome")
                         .IsUnique();
 
                     b.ToTable("TBCategoria", (string)null);
@@ -105,7 +108,7 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
 
                     b.HasIndex("NivelDeDificuldadeId");
 
-                    b.HasIndex("UserId", "Nome")
+                    b.HasIndex("Nome")
                         .IsUnique();
 
                     b.ToTable("TB_Curso", (string)null);
@@ -137,9 +140,6 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                         .HasName("PK_TBEtapa");
 
                     b.HasIndex("CursoId");
-
-                    b.HasIndex("UserId", "Ordem")
-                        .IsUnique();
 
                     b.ToTable("TB_Etapa", (string)null);
                 });
@@ -191,10 +191,10 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id")
                         .HasName("PK_TBInstrutor");
 
-                    b.HasIndex("UserId", "Cpf")
+                    b.HasIndex("Cpf")
                         .IsUnique();
 
-                    b.HasIndex("UserId", "Email")
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("TBInstrutor", (string)null);
@@ -252,9 +252,6 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_TBNivelDeDificuldade");
-
-                    b.HasIndex("UserId", "Nome")
-                        .IsUnique();
 
                     b.ToTable("TB_NivelDeDificuldade", (string)null);
                 });

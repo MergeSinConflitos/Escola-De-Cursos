@@ -28,7 +28,7 @@ public sealed class AlunoConfiguration : IEntityTypeConfiguration<Aluno>
         .HasMaxLength(100)
         .IsRequired();
 
-        builder.HasIndex(a => a.Email)
+        builder.HasIndex(a => new { a.UserId, a.Email })
         .IsUnique();
     }
 }

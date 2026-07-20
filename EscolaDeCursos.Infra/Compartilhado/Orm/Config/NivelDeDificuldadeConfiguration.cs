@@ -27,5 +27,7 @@ public sealed class NivelDeDificuldadeConfiguration : IEntityTypeConfiguration<N
               builder.Property(d => d.Classificacao)
                      .IsRequired();
 
+              builder.HasIndex(d => new { d.UserId, d.Nome })
+              .IsUnique();
        }
 }

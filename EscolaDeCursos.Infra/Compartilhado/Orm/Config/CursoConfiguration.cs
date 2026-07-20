@@ -7,33 +7,33 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Config;
 
 public sealed class CursoConfiguration : IEntityTypeConfiguration<Curso>
 {
-    public void Configure(EntityTypeBuilder<Curso> builder)
-    {
-        builder.ToTable("TB_Curso");
+      public void Configure(EntityTypeBuilder<Curso> builder)
+      {
+            builder.ToTable("TB_Curso");
 
-        builder.HasKey(c => c.Id)
-              .HasName("PK_TBCurso");
+            builder.HasKey(c => c.Id)
+                  .HasName("PK_TBCurso");
 
-        builder.Property(c => c.Id)
-        .ValueGeneratedNever();
+            builder.Property(c => c.Id)
+            .ValueGeneratedNever();
 
-        builder.Property(c => c.Nome)
-              .IsRequired()
-              .HasMaxLength(100);
+            builder.Property(c => c.Nome)
+                  .IsRequired()
+                  .HasMaxLength(100);
 
-        builder.Property(c => c.CargaHoraria)
-              .IsRequired();
+            builder.Property(c => c.CargaHoraria)
+                  .IsRequired();
 
-        builder.HasIndex(c => c.Nome)
-              .IsUnique();
+            builder.HasIndex(c => new { c.UserId, c.Nome })
+                  .IsUnique();
 
-        builder.HasOne(c => c.Categoria)
-              .WithMany();
+            builder.HasOne(c => c.Categoria)
+                  .WithMany();
 
-        builder.HasOne(c => c.NivelDeDificuldade)
-              .WithMany();
+            builder.HasOne(c => c.NivelDeDificuldade)
+                  .WithMany();
 
-        builder.HasMany(c => c.Etapas)
-              .WithOne(e => e.Curso);
-    }
+            builder.HasMany(c => c.Etapas)
+                  .WithOne(e => e.Curso);
+      }
 }

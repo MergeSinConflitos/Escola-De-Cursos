@@ -32,10 +32,10 @@ public sealed class InstrutorConfiguration : IEntityTypeConfiguration<Instrutor>
             .HasMaxLength(11)
             .IsRequired();
 
-        builder.HasIndex(i => i.Email)
+        builder.HasIndex(i => new { i.UserId, i.Email })
             .IsUnique();
 
-        builder.HasIndex(i => i.Cpf)
+        builder.HasIndex(i => new { i.UserId, i.Cpf })
             .IsUnique();
     }
 }

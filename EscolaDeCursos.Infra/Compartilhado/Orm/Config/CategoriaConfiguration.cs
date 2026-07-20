@@ -21,7 +21,7 @@ public sealed class CategoriaConfiguration : IEntityTypeConfiguration<Categoria>
         .HasMaxLength(100)
         .IsRequired();
 
-        builder.HasIndex(c => c.Nome)
+        builder.HasIndex(c => new { c.UserId, c.Nome })
         .IsUnique();
     }
 }
