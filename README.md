@@ -1,5 +1,7 @@
 
-# 🎓 Sistema de Gerenciamento Acadêmico – Escola de Cursos
+# 🎓 Sistema de Gerenciamento Acadêmico – Escola de 
+
+![](Docs/EscolaApp.gif)
 
 ## 📌 Descrição do Projeto
 
