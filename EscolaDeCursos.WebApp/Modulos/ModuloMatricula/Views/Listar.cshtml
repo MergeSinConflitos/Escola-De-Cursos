@@ -1,4 +1,3 @@
-@using EscolaDeCursos.WebApp.Modulos.ModuloMatricula
 @{
     Layout = "_Layout";
     ViewBag.Titulo = "Listagem de Matrículas";
@@ -47,18 +46,18 @@ else
             
             var badgeClass = matricula.Situacao switch
             {
-                "Ativa"     => "bg-success",
+                "Ativa" => "bg-success",
                 "Cancelada" => "bg-danger",
                 "Concluida" => "bg-secondary",
-                _           => "bg-primary"
+                _ => "bg-primary"
             };
 
             var headerClass = matricula.Situacao switch
             {
-                "Ativa"     => "bg-success",
+                "Ativa" => "bg-success",
                 "Cancelada" => "bg-danger",
                 "Concluida" => "bg-secondary",
-                _           => "bg-primary"
+                _ => "bg-primary"
             };
 
             <div class="col-md-6 col-lg-4">
@@ -106,12 +105,10 @@ else
 
                             @if (matricula.Situacao == "Ativa")
                             {
-                                <a class="btn btn-primary" asp-action="Editar"
-                                   asp-route-id="@matricula.Id">
+                                <a class="btn btn-primary" asp-action="Editar" asp-route-id="@matricula.Id">
                                     Editar
                                 </a>
-                                <a class="btn btn-outline-danger" asp-action="Cancelar"
-                                   asp-route-id="@matricula.Id">
+                                <a class="btn btn-outline-danger" asp-action="Cancelar" asp-route-id="@matricula.Id">
                                     Cancelar
                                 </a>
                             }
@@ -135,6 +132,7 @@ else
     .card {
         transition: all .2s ease-in-out;
     }
+
     .card:hover {
         transform: translateY(-5px);
         box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .15);

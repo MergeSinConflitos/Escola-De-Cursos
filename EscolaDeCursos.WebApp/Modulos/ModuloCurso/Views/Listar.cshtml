@@ -1,5 +1,4 @@
-﻿@using EscolaDeCursos.WebApp.Modulos.ModuloCurso
-@{
+﻿@{
     Layout = "_Layout";
     ViewBag.Titulo = "Listagem de Cursos";
 }
@@ -216,7 +215,14 @@ else
 
                     <div class="card-footer bg-white">
 
-                        <div class="btn-group w-100">
+
+                        <div class="d-grid gap-2">
+
+                            <a class="btn btn-success" asp-action="Etapas" asp-route-id="@curso.Id">
+
+                                Etapas Associadas
+
+                            </a>
 
                             <a class="btn btn-primary" asp-action="Editar" asp-route-id="@curso.Id">
 

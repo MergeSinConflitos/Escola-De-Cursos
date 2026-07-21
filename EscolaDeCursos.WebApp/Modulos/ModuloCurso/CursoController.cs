@@ -197,4 +197,14 @@ public class CursoController(
         return mapeador.Map<List<OpcaoNivelDeDificuldadeViewModel>>(
             servicoNivelDeDificuldade.SelecionarOpcoes());
     }
+
+    [HttpGet]
+    public ActionResult Etapas(Guid id)
+    {
+        return RedirectToAction(
+            "Listar",
+            "Etapa",
+            new { cursoId = id }
+        );
+    }
 }
